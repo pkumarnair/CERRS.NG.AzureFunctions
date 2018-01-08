@@ -7,7 +7,10 @@ write-output "--------------------"
 write-Output $result
 write-output "--------------------"
 
+Write-Output ‘Getting PowerShell Module’
 
+$result = Get-Module -ListAvailable|Select-Object Name, Version, ModuleBase|Sort-Object -Property Name|Format-Table -wrap|Out-String
+Write-output `n$result
 
 <#
 $subscriptionId = "9f657357-308f-4780-aee7-070aa7f55580"
@@ -21,7 +24,7 @@ Add-AzureRmAccount -ServicePrincipal -TenantId $servicePrincipalConnection.Tenan
 Start-AzureRmAutomationRunbook -Name "Delete-HDISparkCluster" -AutomationAccountName "svc-oms-automation" -ResourceGroupName "CERRS-DEV-TEST-RG"
 #>
 
-
+<#
 $runbookName = "Delete-HDISparkCluster"
 $ResourceGroup = "CERRS-DEV-TEST-RG"
 $AutomationAcct = "svc-oms-automation"
@@ -36,3 +39,4 @@ While ($doLoop) {
 }
 
 Get-AzureRmAutomationJobOutput –AutomationAccountName $AutomationAcct -Id $job.JobId -ResourceGroupName $ResourceGroup –Stream Output
+#>
