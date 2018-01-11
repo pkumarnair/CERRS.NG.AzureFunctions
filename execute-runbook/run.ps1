@@ -14,7 +14,7 @@ write-output "Executing Runbook $runbookName in $AutomationAccount"
 
 try {
     Add-AzureRmAccount -Credential $cred -Tenant $tenantid -ServicePrincipal -EnvironmentName AzureUSGovernment
-    write-output "Executing Runbook $runbookName in $AutomationAccount"
+    Select-AzurermSubscription -SubscriptionName $env:spnsubscription
     #Start-AzureAutomationRunbook -AutomationAccountName "svc-oms-automation" -Name "Delete-HDISparkCluster"
     Start-AzureAutomationRunbook -AutomationAccountName $AutomationAccount -Name $runbookName
 }catch{
