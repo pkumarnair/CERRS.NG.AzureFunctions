@@ -10,6 +10,8 @@ $tenantid = $env:spntenant
 $SecurePassword = $key | ConvertTo-SecureString -AsPlainText -Force
 $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $clientID, $SecurePassword
 
+write-output "Executing Runbook $runbookName in $AutomationAccount"
+
 try {
     Add-AzureRmAccount -Credential $cred -Tenant $tenantid -ServicePrincipal -Environment "AzureUSGovernment" 
     write-output "Executing Runbook $runbookName in $AutomationAccount"
