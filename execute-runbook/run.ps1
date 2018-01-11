@@ -18,7 +18,7 @@ try {
     return
 }
 $sendemail = "subject~CA-Runbook $runbookName successfully completed"
-return $sendemail
+return
 <#
 $resourceGroupName = "CERRS-DEV-TEST-RG"
 $connectionName = "AzureRunAsConnection"
