@@ -7,8 +7,13 @@ $SecurePassword = $key | ConvertTo-SecureString -AsPlainText -Force
 $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $clientID, $SecurePassword
 $resourceGroupName = "cerrs-dev-test-rg"
 $StorageAccountName = "cerrscaseautomation"
-$container="listener"
+$container="listemer"
 $filename="listener"
+
+$storagekey="g4cMymRd43HdRoAU+nHVNVUInozYYu8yE8Yo7QG3Jfe0namaWmeKCL6zD4BsKjdsLZGRSmjk7Ez0mJ4aa6S2wA=="
+
+
+$ctx=New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $storagekey
 $StorageAccount = Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
 $Blob = Get-AzureStorageBlob -Context $StorageAccount.Context -Container $container -Blob $Filename
 $Text = $blob.ICloudBlob.DownloadText()
