@@ -18,6 +18,7 @@ try {
     #Start-AzureAutomationRunbook -AutomationAccountName "svc-oms-automation" -Name "Delete-HDISparkCluster"
     Start-AzureAutomationRunbook -AutomationAccountName $AutomationAccount -Name $runbookName
 }catch{
+    $_
     $sendemail = "subject~$runbookName could not be executed~~~body~$_.Exception"
     return
 }
