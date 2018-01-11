@@ -1,19 +1,25 @@
 $in = Get-Content $triggerInput -Raw
-Write-Output "PowerShell script processed queue message '$in'"
-write-Output 'Getting variables'
-#$result = Get-Variable | out-string
-$result = Get-AzureRmContext | out-string
-write-output "--------------------"
-write-Output $result
-write-output "--------------------"
 
-Write-Output ‘Getting PowerShell Module’
+$runbookName, $AutomationAccount = $in.split(",")
 
-$result = Get-Module -ListAvailable|Select-Object Name, Version, ModuleBase|Sort-Object -Property Name|Format-Table -wrap|Out-String
-Write-output `n$result
+$clientID = $env:spnid
+$key = $env:spnkey
+$tenantid = $env:spntenant
+$SecurePassword = $key | ConvertTo-SecureString -AsPlainText -Force
+$cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $clientID, $SecurePassword
 
+try {
+    Add-AzureRmAccount -Credential $cred -Tenant $tenantid -ServicePrincipal -Environment "AzureUSGovernment" 
+    write-output "Executing Runbook $runbookName in $AutomationAccount"
+    #Start-AzureAutomationRunbook -AutomationAccountName "svc-oms-automation" -Name "Delete-HDISparkCluster"
+    Start-AzureAutomationRunbook -AutomationAccountName $AutomationAccount -Name $runbookName
+}catch{
+    $sendemail = "subject~$runbookName could not be executed~~~body~$_.Exception"
+    return
+}
+$sendemail = "subject~CA-Runbook $runbookName successfully completed"
+return $sendemail
 <#
-$subscriptionId = "9f657357-308f-4780-aee7-070aa7f55580"
 $resourceGroupName = "CERRS-DEV-TEST-RG"
 $connectionName = "AzureRunAsConnection"
 $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName
