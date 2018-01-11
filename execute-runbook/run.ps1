@@ -1,6 +1,8 @@
 $in = Get-Content $triggerInput -Raw
 
 $runbookName, $AutomationAccount = $in.split(",")
+$runbookName="svc-oms-automation"
+$AutomationAccount="Delete-HDISparkCluster"
 
 $clientID = $env:spnid
 $key = $env:spnkey
