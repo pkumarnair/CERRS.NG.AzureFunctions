@@ -18,5 +18,9 @@ $ctx=New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAcc
 $Blob = Get-AzureStorageBlob -Context $ctx -Container $container -Blob $filename
 $listenerjson = $blob.ICloudBlob.DownloadText() | ConvertTo-Json
 
+Write-Output "Importing module"
+Import-Module "..\modules\Execute-Runbook.psm1"
+Write-Output "Executing module"
+Execute-Runbook "Delete-HDISparkCluster~CERRS-DEV-TEST-RG~svc-oms-automation"
 
 Write-Output $listenerjson
