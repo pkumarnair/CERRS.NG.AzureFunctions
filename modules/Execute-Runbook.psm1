@@ -6,7 +6,7 @@ function Execute-Runbook{
 
     )
 
-    $RunbookName, $ResourceGroupName, $AutomationAccount = $params.split("~")
+    $outputTrigger, $RunbookName, $ResourceGroupName, $AutomationAccount = $params.split("~")
 
     $clientID = $env:spnid
     $key = $env:spnkey
