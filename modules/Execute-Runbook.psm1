@@ -2,7 +2,7 @@ function Execute-Runbook{
     Param
     (
         [Parameter(Mandatory)]
-        [string[]]$params,
+        [string[]]$params
 
     )
 
