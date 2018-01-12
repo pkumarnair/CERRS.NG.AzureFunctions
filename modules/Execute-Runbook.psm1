@@ -1,5 +1,3 @@
-[CmdletBinding()]
-
 function Execute-Runbook{
     Param
     (
