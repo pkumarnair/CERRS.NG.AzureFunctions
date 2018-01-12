@@ -14,7 +14,7 @@ $storagekey="g4cMymRd43HdRoAU+nHVNVUInozYYu8yE8Yo7QG3Jfe0namaWmeKCL6zD4BsKjdsLZG
 
 
 $ctx=New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $storagekey
-$StorageAccount = Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
-$Blob = Get-AzureStorageBlob -Context $StorageAccount.Context -Container $container -Blob $Filename
+#$StorageAccount = Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
+$Blob = Get-AzureStorageBlob -Context $ctx -Container $container -Blob $Filename
 $Text = $blob.ICloudBlob.DownloadText()
 Write-Output $Text
