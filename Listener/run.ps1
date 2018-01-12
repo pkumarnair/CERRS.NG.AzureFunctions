@@ -11,7 +11,7 @@ $StorageAccountName = "cerrscaseautomation"
 $container="listemer"
 $filename="D:\home\site\wwwroot\configs\$proj.json"
 
-$listenerjson=(get-content $filename)|ConvertFrom-Json
+$listenerjson=(Get-Content $filename -Raw)|ConvertFrom-Json
 Write-Output "Importing module"
 Import-Module "D:\home\site\wwwroot\modules\Execute-Runbook.psm1"
 Write-Output "Executing module"
