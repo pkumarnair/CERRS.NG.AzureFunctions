@@ -12,8 +12,7 @@ $filename="listener.json"
 
 $storagekey="g4cMymRd43HdRoAU+nHVNVUInozYYu8yE8Yo7QG3Jfe0namaWmeKCL6zD4BsKjdsLZGRSmjk7Ez0mJ4aa6S2wA=="
 
-
-$ctx=New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $storagekey
+$ctx=New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $storagekey -EnvironmentName "AzureUSGovernment"
 #$StorageAccount = Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
 $Blob = Get-AzureStorageBlob -Context $ctx -Container $container -Blob $filename
 $Text = $blob.ICloudBlob.DownloadText()
