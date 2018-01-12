@@ -9,18 +9,12 @@ $cred = new-object -typename System.Management.Automation.PSCredential -argument
 $resourceGroupName = "cerrs-dev-test-rg"
 $StorageAccountName = "cerrscaseautomation"
 $container="listemer"
-$filename="$proj.json"
+$filename="D:\home\site\wwwroot\configs\$proj.json"
 
-$storagekey="g4cMymRd43HdRoAU+nHVNVUInozYYu8yE8Yo7QG3Jfe0namaWmeKCL6zD4BsKjdsLZGRSmjk7Ez0mJ4aa6S2wA=="
-
-$ctx=New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $storagekey -EnvironmentName "AzureUSGovernment"
-#$StorageAccount = Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName
-$Blob = Get-AzureStorageBlob -Context $ctx -Container $container -Blob $filename
-$listenerjson = $blob.ICloudBlob.DownloadText() | ConvertTo-Json
-
+$listenerjson=(get-content $filename)|ConvertFrom-Json
 Write-Output "Importing module"
 Import-Module "D:\home\site\wwwroot\modules\Execute-Runbook.psm1"
 Write-Output "Executing module"
-Execute-Runbook "Delete-HDISparkCluster~CERRS-DEV-TEST-RG~svc-oms-automation"
+#Execute-Runbook "Delete-HDISparkCluster~CERRS-DEV-TEST-RG~svc-oms-automation"
 
 Write-Output $listenerjson

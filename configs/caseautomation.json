@@ -1,0 +1,58 @@
+{
+	"applicationName":"caseautomation",
+	"events":[
+		{
+			"eventTrigger":"caseautomation-FileReadyToBeMoved",
+			"eventDescription":"Copy File from VM to BLOB",
+			"eventFunction":"CopyFromVMToBlob",
+			"eventParams":[
+				{"key":"outTrigger","value":"CopyToBlobCompleted"},
+				{"key":"VMName","value":"vmname"},
+				{"key":"storageAccountName","value":"StorageAccount1"},
+				{"key":"containerName","value":"ContainerName"},
+				{"key":"OutFileName","value":"OutFuleName1"}
+			]
+		},
+		{
+			"eventTrigger":"caseautomation-FileReadyToBeMoved",
+			"eventDescription":"Start a VM",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"outTrigger","value":"VMStarted"},
+				{"key":"runbookName","value":"Start-VM"},
+				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"svc-oms-automation"}
+			]
+		},
+		{
+			"eventTrigger":"caseautomation-FileReadyToBeMoved",
+			"eventDescription":"Create a Cluster",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"outTrigger","value":"ClusterCreated"},
+				{"key":"runbookName","value":"Create-Cluster"},
+				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"svc-oms-automation"}
+			]
+		},
+		{
+			"eventTrigger":"caseautomation-ClusterCreated",
+			"eventDescription":"Monitor Completion of parallel jobs",
+			"eventFunction":"MonitorAndWait",
+			"eventParams":[
+				{"key":"outTrigger","value":"ReadyToClassify"},
+				{"key":"RunState","value":"VMStarted"},
+				{"key":"RunState","value":"CopyToBlobCompleted"}
+			]
+		},
+		{
+			"eventTrigger":"caseautomation-ReadyToClassify",
+			"eventDescription":"Classify HICS cases",
+			"eventFunction":"CaseClassification",
+			"eventParams":[
+				{"key":"clustername","value":"clustername1"},
+				{"key":"joblocation","value":"test1/path/file.py"}
+			]
+		}
+	]
+}
