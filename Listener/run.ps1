@@ -1,20 +1,22 @@
 $in = Get-Content $triggerInput -Raw
-$proj, $event = $in.split("-")
 
-$clientID = $env:spnid
-$key = $env:spnkey
-$tenantid = $env:spntenant
-$SecurePassword = $key | ConvertTo-SecureString -AsPlainText -Force
-$cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $clientID, $SecurePassword
-$resourceGroupName = "cerrs-dev-test-rg"
-$StorageAccountName = "cerrscaseautomation"
-$container="listemer"
-$filename="D:\home\site\wwwroot\configs\$proj.json"
+$proj, $eventname = $in.split("-")
+$rgn = $env:region
 
-$listenerjson=(Get-Content $filename -Raw)|ConvertFrom-Json
-Write-Output "Importing module " + $listenerjson.applicationName
-Import-Module "D:\home\site\wwwroot\modules\Execute-Runbook.psm1"
-Write-Output "Executing module"
+$filename="D:\home\site\wwwroot\configs\$rgn\$proj.json"
+
+$listener=(Get-Content $filename -Raw)|ConvertFrom-Json
+Write-Output "Importing module " + $listener.applicationName
+
+$events = $listener.events| where { $_.eventTrigger -eq $eventname }
+ForEach $event in $events{
+    Write-Output $event.eventDescription
+    Write-Output $event.eventFunction
+    Write-Output $event.eventParams|convertTo-Json
+}
+
+#Import-Module "D:\home\site\wwwroot\modules\Execute-Runbook.psm1"
+#Write-Output "Executing module"
 #Execute-Runbook "Delete-HDISparkCluster~CERRS-DEV-TEST-RG~svc-oms-automation"
 
-Write-Output $listenerjson
+#Write-Output $listenerjson
