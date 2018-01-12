@@ -12,7 +12,7 @@ $container="listemer"
 $filename="D:\home\site\wwwroot\configs\$proj.json"
 
 $listenerjson=(Get-Content $filename -Raw)|ConvertFrom-Json
-Write-Output "Importing module"
+Write-Output "Importing module $listenerjson.applicationName"
 Import-Module "D:\home\site\wwwroot\modules\Execute-Runbook.psm1"
 Write-Output "Executing module"
 #Execute-Runbook "Delete-HDISparkCluster~CERRS-DEV-TEST-RG~svc-oms-automation"
