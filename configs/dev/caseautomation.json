@@ -2,7 +2,7 @@
 	"applicationName":"caseautomation",
 	"events":[
 		{
-			"eventTrigger":"caseautomation-FileReadyToBeMoved",
+			"eventTrigger":"caseautomation-FileReadyToBeMov",
 			"eventDescription":"Copy File from VM to BLOB",
 			"eventFunction":"CopyFromVMToBlob",
 			"eventParams":[
