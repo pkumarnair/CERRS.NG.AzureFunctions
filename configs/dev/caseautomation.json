@@ -25,12 +25,12 @@
 			]
 		},
 		{
-			"eventTrigger":"caseautomation-FileReadyToBeMoved",
+			"eventTrigger":"CACreateCluster",
 			"eventDescription":"Create a Cluster",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
 				{"key":"outTrigger","value":"ClusterCreated"},
-				{"key":"runbookName","value":"Create-Cluster"},
+				{"key":"runbookName","value":"Create-HDISparkCluster"},
 				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
 				{"key":"automationAccount","value":"svc-oms-automation"}
 			]
