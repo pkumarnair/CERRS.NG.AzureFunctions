@@ -6,7 +6,7 @@ function Execute-Runbook{
 
     )
 
-    $outputTrigger, $RunbookName, $ResourceGroupName, $AutomationAccount = $params.split("~")
+    $outputTrigger, $RunbookName, $ResourceGroupName, $AutomationAccount, $RbParams= $params.split("~")
 
     $clientID = $env:spnid
     $key = $env:spnkey
@@ -18,7 +18,11 @@ function Execute-Runbook{
 
     try {
         Add-AzureRmAccount -Credential $cred -Tenant $tenantid -ServicePrincipal -EnvironmentName AzureUSGovernment
-        Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName
+        if ($RbParams){
+            Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -Parameter $RbParams
+        }else{
+            Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName
+        }
     }catch{
         $_
         return
