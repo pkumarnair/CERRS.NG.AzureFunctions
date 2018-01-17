@@ -62,7 +62,9 @@
 				{"key":"outTrigger","value":"TestCompleted"},
 				{"key":"runbookName","value":"TestParams"},
 				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
-				{"key":"automationAccount","value":"svc-oms-automation"}
+				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"mode","value":"Start"},
+				{"key":"VmName","value":"VMName1"}
 			]
 		}
 	]
