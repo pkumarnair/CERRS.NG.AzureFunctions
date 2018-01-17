@@ -53,6 +53,17 @@
 				{"key":"clustername","value":"clustername1"},
 				{"key":"joblocation","value":"test1/path/file.py"}
 			]
+		},
+		{
+			"eventTrigger":"TestParams",
+			"eventDescription":"Test passing of Params to Runbook",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"outTrigger","value":"TestCompleted"},
+				{"key":"runbookName","value":"TestParams"},
+				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"svc-oms-automation"}
+			]
 		}
 	]
 }
