@@ -2,7 +2,7 @@
 	"applicationName":"caseautomation",
 	"events":[
 		{
-			"eventTrigger":"caseautomation-FileReadyToBeMov",
+			"eventTrigger":"FileReadyToBeMov",
 			"eventDescription":"Copy File from VM to BLOB",
 			"eventFunction":"CopyFromVMToBlob",
 			"eventParams":[
@@ -14,14 +14,14 @@
 			]
 		},
 		{
-			"eventTrigger":"caseautomation-FileReadyToBeMoved",
+			"eventTrigger":"FileReadyToBeMoved",
 			"eventDescription":"Start a VM",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
-				{"key":"outTrigger","value":"VMStarted"},
 				{"key":"runbookName","value":"Start-VM"},
 				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
-				{"key":"automationAccount","value":"svc-oms-automation"}
+				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"outTrigger","value":"VMStarted"}
 			]
 		},
 		{
@@ -29,10 +29,10 @@
 			"eventDescription":"Create a Cluster",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
-				{"key":"outTrigger","value":"ClusterCreated"},
 				{"key":"runbookName","value":"Create-HDISparkCluster"},
 				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
-				{"key":"automationAccount","value":"svc-oms-automation"}
+				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"outTrigger","value":"ClusterCreated"}
 			]
 		},
 		{
@@ -59,10 +59,10 @@
 			"eventDescription":"Test passing of Params to Runbook",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
-				{"key":"outTrigger","value":"TestCompleted"},
 				{"key":"runbookName","value":"TestParams"},
 				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
 				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"outTrigger","value":"TestCompleted"},
 				{"key":"mode","value":"Start"},
 				{"key":"VmName","value":"VMName1"}
 			]
