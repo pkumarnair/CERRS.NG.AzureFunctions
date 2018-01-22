@@ -46,12 +46,14 @@
 			]
 		},
 		{
-			"eventTrigger":"caseautomation-ReadyToClassify",
-			"eventDescription":"Classify HICS cases",
-			"eventFunction":"CaseClassification",
+			"eventTrigger":"TestStatements",
+			"eventDescription":"Test Statements in Runbook",
+			"eventFunction":"Execute-Runbook",
 			"eventParams":[
-				{"key":"clustername","value":"clustername1"},
-				{"key":"joblocation","value":"test1/path/file.py"}
+				{"key":"runbookName","value":"Test-Statements"},
+				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"message","value":"completed message"}
 			]
 		},
 		{
