@@ -1,0 +1,73 @@
+{
+	"applicationName":"caseautomation",
+	"events":[
+		{
+			"eventTrigger":"FileReadyToBeMov",
+			"eventDescription":"Copy File from VM to BLOB",
+			"eventFunction":"CopyFromVMToBlob",
+			"eventParams":[
+				{"key":"outTrigger","value":"CopyToBlobCompleted"},
+				{"key":"VMName","value":"vmname"},
+				{"key":"storageAccountName","value":"StorageAccount1"},
+				{"key":"containerName","value":"ContainerName"},
+				{"key":"OutFileName","value":"OutFuleName1"}
+			]
+		},
+		{
+			"eventTrigger":"FileReadyToBeMoved",
+			"eventDescription":"Start a VM",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Start-VM"},
+				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"outTrigger","value":"VMStarted"}
+			]
+		},
+		{
+			"eventTrigger":"CACreateCluster",
+			"eventDescription":"Create a Cluster",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Create-HDISparkCluster"},
+				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"outTrigger","value":"ClusterCreated"}
+			]
+		},
+		{
+			"eventTrigger":"caseautomation-ClusterCreated",
+			"eventDescription":"Monitor Completion of parallel jobs",
+			"eventFunction":"MonitorAndWait",
+			"eventParams":[
+				{"key":"outTrigger","value":"ReadyToClassify"},
+				{"key":"RunState","value":"VMStarted"},
+				{"key":"RunState","value":"CopyToBlobCompleted"}
+			]
+		},
+		{
+			"eventTrigger":"TestStatements",
+			"eventDescription":"Test Statements in Runbook",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Test-Statements"},
+				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"message","value":"completed message"}
+			]
+		},
+		{
+			"eventTrigger":"TestParams",
+			"eventDescription":"Test passing of Params to Runbook",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"TestParams"},
+				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"svc-oms-automation"},
+				{"key":"outTrigger","value":"TestCompleted"},
+				{"key":"mode","value":"Start"},
+				{"key":"VmName","value":"VMName1"}
+			]
+		}
+	]
+}
