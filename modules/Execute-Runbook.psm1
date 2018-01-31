@@ -6,7 +6,21 @@ function Execute-Runbook{
 
     )
 
-    $RunbookName, $ResourceGroupName, $AutomationAccount, $RbParamsIn= $params.split("~")
+    $RbParams=@{}
+
+    ForEach($_ in $RbParamsIn){
+        $key,$value=$_.split("=")
+        if($key="runbookName"){
+          $runbookName=$value
+        }ElseIf($key="resourceGroup"){
+          $resourceGroup=$value
+        }ElseIf($key="automationAccount"){
+          $automationAccount=$value
+        }else{
+
+        }
+        $RbParams.add($_.split("=")[0],$value)
+    }
 
     $clientID = $env:spnid
     $key = $env:spnkey
@@ -15,11 +29,11 @@ function Execute-Runbook{
     $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $clientID, $SecurePassword
 
     write-output "Executing Runbook $runbookName in $AutomationAccount"
+    write-output $RbParams
 
     try {
         Add-AzureRmAccount -Credential $cred -Tenant $tenantid -ServicePrincipal -EnvironmentName AzureUSGovernment
-        if ($RbParamsIn){
-            $RbParams=@{params=($RbParamsIn -join "~")}
+        if ($RbParams){
             Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -Parameter $RbParams
         }else{
             Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName

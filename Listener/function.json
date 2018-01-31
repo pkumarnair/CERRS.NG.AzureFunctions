@@ -7,6 +7,13 @@
       "direction": "in",
       "queueName": "listener-queue",
       "connection": "AzureWebJobsStorage"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "$return",
+      "queueName": "email-queue",
+      "connection": "AzureWebJobsStorage",
     }
   ]
 }
