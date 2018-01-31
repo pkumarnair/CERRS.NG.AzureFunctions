@@ -1,5 +1,4 @@
 $in = Get-Content $triggerInput -Raw
-caseautomation-StartCluster
 $proj, $eventname = $in.split("-")
 $eventname = $eventname -join "-"
 $rgn = $env:region
