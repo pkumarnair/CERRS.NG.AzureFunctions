@@ -12,7 +12,7 @@ function Initiate-Livy{
     $pyargs=@()
     $postdata=@{}
 
-    $joblocation=$env:joblocation
+    $joblocation=$env:pythonJobLocation
     #$joblocation="wasb://cerrscablob@cerrscaseautomationdev.blob.core.usgovcloudapi.net/"
     write-output "Starting Execute-Runbook------------"
     write-output $params
