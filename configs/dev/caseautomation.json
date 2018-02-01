@@ -2,8 +2,8 @@
 	"applicationName":"caseautomation",
 	"events":[
 		{
-			"eventTrigger":"StartCluster",
-			"eventDescription":"Test params",
+			"eventTrigger":"CreateCluster",
+			"eventDescription":"Create a cluster",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
 				{"key":"runbookName","value":"Test-Create-HDISparkCluster"},
@@ -17,6 +17,33 @@
 				{"key":"outMessage","value":"ClusterCreated"},
 				{"key":"pswrd","value":"env-clusterpassword"},
 				{"key":"queueName","value":"env-listenerqueueName"}
+			]
+		},
+		{
+			"eventTrigger":"ClusterCreated",
+			"eventDescription":"Case Classification",
+			"eventFunction":"Initiate-Livy",
+			"eventParams":[
+				{"key":"mainfile","value":"test.py"},
+				{"key":"pyargs","value":"arg1"},
+				{"key":"pyargs","value":"arg2"},
+				{"key":"pyargs","value":"arg3"},
+				{"key":"pyargs","value":"arg4"},
+				{"key":"pyargs","value":"arg5"},
+				{"key":"pyfiles","value":"file1"},
+				{"key":"pyfiles","value":"file2"},
+				{"key":"pyfiles","value":"file3"},
+				{"key":"pyfiles","value":"file4"},
+				{"key":"pyfiles","value":"file5"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"Python2"}
+			]
+		},
+		{
+			"eventTrigger":"ClusterStarted",
+			"eventDescription":"Test Livy",
+			"eventFunction":"Initiate-Livy",
+			"eventParams":[
+				{"key":"mainfile","value":"test.py"}
 			]
 		}
 	]
