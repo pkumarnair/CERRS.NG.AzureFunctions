@@ -25,6 +25,8 @@ function Execute-Runbook{
         }else{
 
         }
+
+        write-output "Key is $key, and value is $value"
         $RbParams.add($key,$value)
     }
 
@@ -32,7 +34,7 @@ function Execute-Runbook{
     write-output $RunbookName
     write-output $AutomationAccount
     write-output $ResourceGroupName
-    write-output $RbParams
+    write-output $RbParams|ConvertTo-JSON
 
     $clientID = $env:spnid
     $key = $env:spnkey
