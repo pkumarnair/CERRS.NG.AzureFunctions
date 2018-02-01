@@ -16,7 +16,7 @@
  				{"key":"clusterName","value":"env-clustername"},
 				{"key":"outMessage","value":"ClusterCreated"},
 				{"key":"pswrd","value":"env-clusterpassword"},
-				{"key":"queueName","value":"env-listenerqueueName"},
+				{"key":"queueName","value":"env-listenerqueueName"}
 			]
 		}
 	]
