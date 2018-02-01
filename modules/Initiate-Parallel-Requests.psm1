@@ -42,7 +42,9 @@ function Initiate-Parallel-Requests{
     write-output "messages is $messages"
 
     try{
+        write-output "11111111111111111111111111111111111111111"
         $ctx=New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $storagekey -Environment AzureUSGovernment
+        write-output "22222222222222222222222222222222222222222"
         $queue = Get-AzureStorageQueue –Name $queuename –Context $ctx
     }catch{
         $_
@@ -51,6 +53,7 @@ function Initiate-Parallel-Requests{
 
     ForEach($message in $messages){
         try {
+            write-output "3333333333333333333333333333333333333333333"
             $queueMessage = New-Object -TypeName Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage -ArgumentList ($proj+"-"+$message)
             $queue.CloudQueue.AddMessage($queueMessage)
         }catch{
