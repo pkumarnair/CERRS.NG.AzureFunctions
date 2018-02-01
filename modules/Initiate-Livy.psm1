@@ -37,7 +37,7 @@ function Initiate-Livy{
         }elseIf($key -eq "mainfile"){
           $mainfile=$joblocation+$value
         }elseIf($key -Match "pyconf-*"){
-          $key,$val=$_.split("-")
+          $key,$val=$key.split("-")
           $key=$val -join "-"
           $pyconf.add($key,$value)
         }else{
