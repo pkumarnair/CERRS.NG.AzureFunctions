@@ -1,4 +1,4 @@
-function Execute-Runbook{
+function Initiate-Livy{
     Param
     (
         [Parameter(Mandatory)]
