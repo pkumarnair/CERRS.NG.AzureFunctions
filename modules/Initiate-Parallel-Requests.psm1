@@ -36,9 +36,14 @@ function Initiate-Parallel-Requests{
         }
     }
 
+    write-output "queuename is $queuename"
+    write-output "storagekey is $storagekey"
+    write-output "storageaccountname is $storageaccountname"
+    write-output "messages is $messages"
+
     try{
         $ctx=New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $storagekey -Environment AzureUSGovernment
-        $queue = Get-AzureStorageQueue –Name $queueName –Context $ctx
+        $queue = Get-AzureStorageQueue –Name $queuename –Context $ctx
     }catch{
         $_
         return
