@@ -18,7 +18,7 @@ function Execute-Runbook{
         $key,$value=$_.split("=")
         write-output "?????????????????"
         write-output $value
-        if($value.substring(0,4) -eq "env:"){
+        if($value.substring(0,5) -eq "$env:"){
             write-output "========="
             write-output $value
             $value = Get-Variable -Name value
