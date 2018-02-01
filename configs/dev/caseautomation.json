@@ -21,6 +21,20 @@
 		},
 		{
 			"eventTrigger":"ClusterCreated",
+			"eventDescription":"Create messages for parallel jobs",
+			"eventFunction":"Initiate-Parallel-Requests",
+			"eventParams":[
+				{"key":"queuename","value":"testqueue"},
+				{"key":"storagekey","value":"env-storageaccountkey"},
+				{"key":"storageaccountname","value":"env-storageAccountName"},
+				{"key":"message","value":"StartFFMParquetConversion"},
+				{"key":"message","value":"StartRCNOParquetConversion"},
+				{"key":"message","value":"Start1095AParquetConversion"},
+				{"key":"message","value":"StartCaseClassification"}
+			]
+		},
+		{
+			"eventTrigger":"StartCaseClassification",
 			"eventDescription":"Case Classification",
 			"eventFunction":"Initiate-Livy",
 			"eventParams":[
