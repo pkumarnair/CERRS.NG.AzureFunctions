@@ -36,7 +36,7 @@
 				{"key":"pyargs","value":"ClassificationOutput/"},
 				{"key":"pyargs","value":"StartAndEndDateOutPut.csv"},
 				{"key":"pyfiles","value":"functions.py"},
-				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"Python2"}
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
 			]
 		},
 		{
