@@ -15,8 +15,7 @@ function Initiate-Livy{
 
     $joblocation=$env:pythonJobLocation
     #$joblocation="wasb://cerrscablob@cerrscaseautomationdev.blob.core.usgovcloudapi.net/"
-    write-output "Initiating Livy------------"
-    write-output $params
+    write-output "Inside Initiating Livy------------"
 
     ForEach($_ in $params.split("~")){
         $key,$val=$_.split("=")
@@ -49,12 +48,6 @@ function Initiate-Livy{
     if($outmessage){
         $pyargs=, $outmessage + $pyargs
     }
-
-    write-output "The livy parameters ------------"
-    write-output "Mainfile is $mainfile"
-    write-output "pyfiles are "($pyfiles|ConvertTo-JSON)
-    write-output "pyargs are "($pyargs|ConvertTo-JSON)
-    write-output "pyconf are "($pyconf|ConvertTo-JSON)
 
     $postdata.Add("file",$mainfile)
     if($pyfiles){
