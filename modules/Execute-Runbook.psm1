@@ -18,7 +18,12 @@ function Execute-Runbook{
         $key,$val=$_.split("=")
         write-output "?????????????????"
         write-output $val
-        $value = $val
+        if(($val.split("-"))[0]="env"){
+            $v=$val.split("-"))[1]
+            $value = get-item env:$v
+        }else{
+            $value = $val
+        }
         write-output $value
         write-output "?????????????????"
         if($key -eq "runbookName"){

@@ -10,7 +10,7 @@
 				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
 				{"key":"automationAccount","value":"$env:automationaccountname"},
 				{"key":"outMessage","value":"ClusterCreated"},
-				{"key":"pswrd","value":"$env:clusterpassword"}
+				{"key":"pswrd","value":"env-clusterpassword"}
 			]
 		}
 	]
