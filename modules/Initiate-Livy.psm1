@@ -51,7 +51,7 @@ function Initiate-Livy{
 
     $postdata.Add("file",$mainfile)
     if($pyfiles){
-        $postdata.Add("pyfiles",$pyfiles)
+        $postdata.Add("pyFiles",$pyfiles)
     }
 
     if($pyargs){
