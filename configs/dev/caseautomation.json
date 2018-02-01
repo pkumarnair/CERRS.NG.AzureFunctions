@@ -6,11 +6,17 @@
 			"eventDescription":"Test params",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
-				{"key":"runbookName","value":"test-param-passaing"},
-				{"key":"resourceGroup","value":"CERRS-DEV-TEST-RG"},
+				{"key":"runbookName","value":"Test-Create-HDISparkCluster"},
+				{"key":"resourceGroupName","value":"CERRS-DEV-TEST-RG"},
 				{"key":"automationAccount","value":"env-automationaccountname"},
+ 				{"key":"location","value":"env-location"},
+ 				{"key":"subscriptionId","value":"env-subscriptionid"},
+ 				{"key":"storageAccountName","value":"env-storageAccountName"},
+ 				{"key":"containerName","value":"env-clustercontainer"},
+ 				{"key":"clusterName","value":"env-clustername"},
 				{"key":"outMessage","value":"ClusterCreated"},
-				{"key":"pswrd","value":"env-clusterpassword"}
+				{"key":"pswrd","value":"env-clusterpassword"},
+				{"key":"queueName","value":"env-listenerqueueName"},
 			]
 		}
 	]

@@ -16,19 +16,15 @@ function Execute-Runbook{
 
     ForEach($_ in $params.split("~")){
         $key,$val=$_.split("=")
-        write-output "?????????????????"
-        write-output $val
         if($val.split("-")[0] -eq "env"){
             $v=$val.split("-")[1]
             $value = (get-item env:$v).value
         }else{
             $value = $val
         }
-        write-output $value
-        write-output "?????????????????"
         if($key -eq "runbookName"){
           $RunbookName=$value
-        }ElseIf($key -eq "resourceGroup"){
+        }ElseIf($key -eq "resourceGroupName"){
           $ResourceGroupName=$value
         }ElseIf($key -eq "automationAccount"){
           $AutomationAccount=$value
@@ -41,9 +37,9 @@ function Execute-Runbook{
     }
 
     write-output "The Runbook job parameters ------------"
-    write-output $RunbookName
-    write-output $AutomationAccount
-    write-output $ResourceGroupName
+    write-output "Runbook is $RunbookName"
+    write-output "AutomationAccount is $AutomationAccount"
+    write-output "ResourceGroupName is $ResourceGroupName"
     write-output $RbParams|ConvertTo-JSON
 
     $clientID = $env:spnid
