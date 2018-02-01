@@ -18,13 +18,9 @@ function Execute-Runbook{
         $key,$value=$_.split("=")
         write-output "?????????????????"
         write-output $value
-        if($value.substring(0,5) -eq "$env:"){
-            write-output "========="
-            write-output $value
-            $value = Get-Variable -Name value
-            write-output $value
-            write-output "========="
-        }
+        $value = Get-Variable -Name value
+        write-output $value
+        write-output "?????????????????"
         if($key -eq "runbookName"){
           $RunbookName=$value
         }ElseIf($key -eq "resourceGroup"){
