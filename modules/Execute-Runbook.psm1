@@ -16,6 +16,8 @@ function Execute-Runbook{
 
     ForEach($_ in $params.split("~")){
         $key,$value=$_.split("=")
+        write-output "?????????????????"
+        write-output $value
         if($value.substring(0,4) -eq "env:"){
             write-output "========="
             write-output $value
