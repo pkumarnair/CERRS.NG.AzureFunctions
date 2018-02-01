@@ -47,7 +47,7 @@ function Initiate-Parallel-Requests{
     ForEach($message in $messages){
         try {
             $queueMessage = New-Object -TypeName Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage -ArgumentList ($proj+"-"+$message)
-            $queue.CloudQueue.AddMessage(queueMessage)
+            $queue.CloudQueue.AddMessage($queueMessage)
         }catch{
             $_
             return
