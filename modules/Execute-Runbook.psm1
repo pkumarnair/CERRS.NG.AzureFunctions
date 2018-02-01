@@ -20,7 +20,7 @@ function Execute-Runbook{
         write-output $val
         if($val.split("-")[0] -eq "env"){
             $v=$val.split("-")[1]
-            $value = get-item env:$v
+            $value = (get-item env:$v).value
         }else{
             $value = $val
         }
