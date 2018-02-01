@@ -14,20 +14,18 @@ function Execute-Runbook{
     write-output "Starting Execute-Runbook------------"
     write-output $params
 
-    $RbParams=@{}
-
-    ForEach($_ in $params){
+    ForEach($_ in $params.split("~")){
         $key,$value=$_.split("=")
-        if($key="runbookName"){
+        if($key -eq "runbookName"){
           $RunbookName=$value
-        }ElseIf($key="resourceGroup"){
+        }ElseIf($key -eq "resourceGroup"){
           $ResourceGroupName=$value
-        }ElseIf($key="automationAccount"){
+        }ElseIf($key -eq "automationAccount"){
           $AutomationAccount=$value
         }else{
 
         }
-        $RbParams.add($_.split("=")[0],$value)
+        $RbParams.add($key,$value)
     }
 
     write-output "The Runbook job parameters ------------"
