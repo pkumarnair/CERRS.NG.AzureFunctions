@@ -15,10 +15,10 @@ function Execute-Runbook{
     write-output $params
 
     ForEach($_ in $params.split("~")){
-        $key,$value=$_.split("=")
+        $key,$val=$_.split("=")
         write-output "?????????????????"
-        write-output $value
-        $value = Get-Variable -Name value
+        write-output $val
+        $value = %val
         write-output $value
         write-output "?????????????????"
         if($key -eq "runbookName"){
