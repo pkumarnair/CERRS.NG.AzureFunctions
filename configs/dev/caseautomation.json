@@ -35,6 +35,7 @@
 				{"key":"pyfiles","value":"file3"},
 				{"key":"pyfiles","value":"file4"},
 				{"key":"pyfiles","value":"file5"},
+				{"key":"outMessage","value":"ClassificationCompleted"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"Python2"}
 			]
 		},

@@ -14,6 +14,11 @@ $event = $listener.events| where { $_.eventTrigger -eq $eventname }
 $eventFunc = $event.eventFunction
 $evntparms = @(ForEach($_ in $event.eventParams){"$($_.key)=$($_.value)"}) -join "~"
 
+if($evntparms){
+    $evntparms ="proj=$proj~"+$evntparms
+}else{
+    $evntparms ="proj=$proj"
+}
 <#
 $events = $listener.events| where { $_.eventTrigger -eq $eventname }
 ForEach ($event in $events){

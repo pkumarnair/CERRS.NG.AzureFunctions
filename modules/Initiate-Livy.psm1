@@ -11,10 +11,11 @@ function Initiate-Livy{
     $pyconf=@{}
     $pyargs=@()
     $postdata=@{}
+    $outmessage=""
 
     $joblocation=$env:pythonJobLocation
     #$joblocation="wasb://cerrscablob@cerrscaseautomationdev.blob.core.usgovcloudapi.net/"
-    write-output "Starting Execute-Runbook------------"
+    write-output "Initiating Livy------------"
     write-output $params
 
     ForEach($_ in $params.split("~")){
@@ -28,17 +29,25 @@ function Initiate-Livy{
 
         if($key -eq "pyfiles"){
           $pyfiles+=$joblocation+$value
-        }ElseIf($key -eq "pyargs"){
+        }elseIf($key -eq "pyargs"){
           $pyargs+=$value
-        }ElseIf($key.substring(0,6) -eq "pyconf"){
+        }elseIf($key -eq "proj"){
+          $proj=$value
+        }elseIf($key -eq "outMessage"){
+          $outmessage=$proj+"-"+$value
+        }elseIf($key -eq "mainfile"){
+          $mainfile=$joblocation+$value
+        }elseIf($key -Match "pyconf-*"){
           $key,$val=$_.split("-")
           $key=$val -join "-"
           $pyconf.add($key,$value)
-        }elseIf($key -eq "mainfile"){
-          $mainfile=$joblocation+$value
         }else{
 
         }
+    }
+
+    if($outmessage){
+        $pyargs=, $outmessage + $pyargs
     }
 
     write-output "The livy parameters ------------"
@@ -46,7 +55,6 @@ function Initiate-Livy{
     write-output "pyfiles are "($pyfiles|ConvertTo-JSON)
     write-output "pyargs are "($pyargs|ConvertTo-JSON)
     write-output "pyconf are "($pyconf|ConvertTo-JSON)
-
 
     $postdata.Add("file",$mainfile)
     if($pyfiles){

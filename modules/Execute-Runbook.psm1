@@ -28,12 +28,18 @@ function Execute-Runbook{
           $ResourceGroupName=$value
         }ElseIf($key -eq "automationAccount"){
           $AutomationAccount=$value
+        }ElseIf($key -eq "proj"){
+          $proj=$value
+        }ElseIf($key -eq "outMessage"){
+          $value=$proj+"-"+$value
         }else{
 
         }
 
         write-output "Key is $key, and value is $value"
-        $RbParams.add($key,$value)
+        If($key -ne "proj"){
+            $RbParams.add($key,$value)
+        }
     }
 
     write-output "The Runbook job parameters ------------"
