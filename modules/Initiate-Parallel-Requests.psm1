@@ -75,7 +75,7 @@ function Initiate-Parallel-Requests{
 }
 
 function test-function{
-    params(
+    Param(
         $storageaccountname,
         $storagekey,
         $queuename,
