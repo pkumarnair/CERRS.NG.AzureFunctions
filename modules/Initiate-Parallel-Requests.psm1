@@ -13,6 +13,20 @@ function Initiate-Parallel-Requests{
     $messages=@()
     write-output "Inside Initiate-Parallel-Requests------------"
 
+    $resourcegroupname=$env:spnresourcegroupname
+    $clientID = $env:spnid
+    $key = $env:spnkey
+    $tenantid = $env:spntenant
+    $SecurePassword = $key | ConvertTo-SecureString -AsPlainText -Force
+    $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $clientID, $SecurePassword
+
+    try {
+        Add-AzureRmAccount -Credential $cred -Tenant $tenantid -ServicePrincipal -EnvironmentName AzureUSGovernment
+    }catch{
+        $_
+        return
+    }
+
     ForEach($_ in $params.split("~")){
         $key,$val=$_.split("=")
         if($val.split("-")[0] -eq "env"){
@@ -39,6 +53,9 @@ function Initiate-Parallel-Requests{
         }
     }
 
+    $storage=Get-AzureRmStorageAccount -ResourceGroupName $resourcegroupname -AccountName $storageaccountname
+
+    write-output $storage
     write-output "queuename is $queuename"
     write-output "connectionstring is $connectionstring"
     write-output "storageaccountname is $storageaccountname"
@@ -47,7 +64,8 @@ function Initiate-Parallel-Requests{
     try{
         write-output "11111111111111111111111111111111111111111"
         #$ctx=New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $storagekey -Environment AzureUSGovernment
-        $ctx=New-AzureStorageContext -ConnectionString $connectionstring
+        #$ctx=New-AzureStorageContext -ConnectionString $connectionstring
+        $ctx=$storage.Context
         write-output "22222222222222222222222222222222222222222"
         $queue = Get-AzureStorageQueue –Name $queuename –Context $ctx
     }catch{
