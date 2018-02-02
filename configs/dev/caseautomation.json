@@ -26,11 +26,9 @@
 			"eventParams":[
 				{"key":"queuename","value":"testqueue"},
 				{"key":"connectionstring","value":"env-AzureWebJobsStorage"},
+				{"key":"storagekey","value":"env-storageaccountkey"},
 				{"key":"storageaccountname","value":"env-storageAccountName"},
-				{"key":"message","value":"StartFFMParquetConversion"},
-				{"key":"message","value":"StartRCNOParquetConversion"},
-				{"key":"message","value":"Start1095AParquetConversion"},
-				{"key":"message","value":"StartCaseClassification"}
+				{"key":"message","value":"StartFFMParquetConversion"}
 			]
 		},
 		{
