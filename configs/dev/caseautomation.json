@@ -52,6 +52,29 @@
 			]
 		},
 		{
+			"eventTrigger":"StartDataExtraction",
+			"eventDescription":"Data Extraction from FFM, 1095A and RCNO",
+			"eventFunction":"Initiate-Livy",
+			"eventParams":[
+				{"key":"mainfile","value":"SparkTemp.py"},
+				{"key":"outMessage","value":"DataExtractionCompleted"},
+				{"key":"pyargs","value":"env-storageAccountName"},
+				{"key":"pyargs","value":"env-storageaccountkey"},
+				{"key":"pyargs","value":"env-endpoint"},
+				{"key":"pyargs","value":"env-listenerqueueName"},
+				{"key":"pyargs","value":"env-clustercontainer"},
+				{"key":"pyargs","value":"caseoutput/"},
+				{"key":"pyargs","value":"wasbs://cerrscablob@cerrscaseautomationdev.blob.core.usgovcloudapi.net//ClassificationOutput//StartAndEndDateOutPut.csv"},
+				{"key":"pyargs","value":"wasbs://rcno-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
+				{"key":"pyargs","value":"wasbs://ffm-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
+				{"key":"pyargs","value":"wasbs://1095a-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
+				{"key":"pyargs","value":"wasbs://ffm-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
+				{"key":"pyargs","value":"Caseoutput.csv"},
+				{"key":"pyfiles","value":"functions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
 			"eventTrigger":"ClusterStarted",
 			"eventDescription":"Test Livy",
 			"eventFunction":"Initiate-Livy",
