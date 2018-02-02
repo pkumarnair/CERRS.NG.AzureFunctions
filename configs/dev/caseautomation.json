@@ -52,7 +52,7 @@
 			]
 		},
 		{
-			"eventTrigger":"StartDataExtraction",
+			"eventTrigger":"ClassificationCompleted",
 			"eventDescription":"Data Extraction from FFM, 1095A and RCNO",
 			"eventFunction":"Initiate-Livy",
 			"eventParams":[
