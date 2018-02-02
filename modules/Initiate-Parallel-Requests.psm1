@@ -9,6 +9,7 @@ function Initiate-Parallel-Requests{
     $storagekey=""
     $queuename=""
     $storageaccountname=""
+    $connectionstring=""
     $messages=@()
     write-output "Inside Initiate-Parallel-Requests------------"
 
@@ -25,6 +26,8 @@ function Initiate-Parallel-Requests{
           $queuename=$value
         }elseIf($key -eq "storagekey"){
           $storagekey=$value
+        }elseIf($key -eq "connectionstring"){
+          $connectionstring=$value
         }elseIf($key -eq "storageaccountname"){
             $storageaccountname=$value
         }elseIf($key -eq "message"){
@@ -37,13 +40,14 @@ function Initiate-Parallel-Requests{
     }
 
     write-output "queuename is $queuename"
-    write-output "storagekey is $storagekey"
+    write-output "connectionstring is $connectionstring"
     write-output "storageaccountname is $storageaccountname"
     write-output "messages is $messages"
 
     try{
         write-output "11111111111111111111111111111111111111111"
-        [Microsoft.WindowsAzure.Commands.Common.Storage.AzureStorageContext]$ctx=New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $storagekey -Environment AzureUSGovernment
+        #$ctx=New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $storagekey -Environment AzureUSGovernment
+        $ctx=New-AzureStorageContext -ConnectionString $connectionstring
         write-output "22222222222222222222222222222222222222222"
         $queue = Get-AzureStorageQueue –Name $queuename –Context $ctx
     }catch{

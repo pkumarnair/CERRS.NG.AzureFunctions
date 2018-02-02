@@ -25,7 +25,7 @@
 			"eventFunction":"Initiate-Parallel-Requests",
 			"eventParams":[
 				{"key":"queuename","value":"testqueue"},
-				{"key":"storagekey","value":"env-storageaccountkey"},
+				{"key":"connectionstring","value":"env-AzureWebJobsStorage"},
 				{"key":"storageaccountname","value":"env-storageAccountName"},
 				{"key":"message","value":"StartFFMParquetConversion"},
 				{"key":"message","value":"StartRCNOParquetConversion"},
