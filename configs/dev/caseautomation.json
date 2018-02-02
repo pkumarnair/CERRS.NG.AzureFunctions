@@ -68,7 +68,6 @@
 				{"key":"pyargs","value":"wasbs://rcno-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
 				{"key":"pyargs","value":"wasbs://ffm-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
 				{"key":"pyargs","value":"wasbs://1095a-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
-				{"key":"pyargs","value":"wasbs://ffm-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
 				{"key":"pyargs","value":"Caseoutput.csv"},
 				{"key":"pyfiles","value":"functions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
