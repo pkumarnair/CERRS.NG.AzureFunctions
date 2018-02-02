@@ -87,7 +87,7 @@ function test-function{
         write-output "11111111111111111111111111111111111111111"
         $ctx=New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $storagekey -Environment AzureUSGovernment
         write-output "22222222222222222222222222222222222222222"
-        $queue = Get-AzureStorageQueue –Name $queuename –Context $ctx
+        $queue = Get-AzureStorageQueue –Name $queuename –context $ctx
         write-output "33333333333333333333333333333333333333333"
         $queueMessage = New-Object -TypeName Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage -ArgumentList $message
         write-output "44444444444444444444444444444444444444444"
