@@ -38,7 +38,7 @@
 			"eventParams":[
 				{"key":"resturl","value":"https://mcr-cc.test.cognosante.cc/v1/AddressInfo"},
 				{"key":"restMethod","value":"Get"},
-				{"key":"restparams-street","value":"street=+509+Adams+Ave+Apt+1A+Cape+Canaveral+FL+32920"},
+				{"key":"restparams-street","value":"+509+Adams+Ave+Apt+1A+Cape+Canaveral+FL+32920"},
 				{"key":"header-callingApp","value":"TestFramework"},
 				{"key":"header-callingUser","value":"AutomationUser"},
 				{"key":"header-x-cognosante-authentication","value":"6d5d56f7cf494134a96cc6910549341a"},
