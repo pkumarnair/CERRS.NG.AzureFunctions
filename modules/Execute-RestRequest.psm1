@@ -32,10 +32,8 @@ function Execute-RestRequest{
             $key=$val -join "-"
             if ($restparams){
                 $restparams+="&$val=$value"
-                write-output $restparams      
             }else{
                 $restparams+="$val=$value"      
-                write-output $restparams      
             }
         }elseIf($key -Match "header-*"){
             $key,$val=$key.split("-")
@@ -53,15 +51,19 @@ function Execute-RestRequest{
     write-output "---------------------------"
     write-output $restUrl
     write-output $restparams
-    write-output $headers
+    write-output $headers|convertto-JSON
     write-output "---------------------------"
+
+    $password = "6d5d56f7cf494134a96cc6910549341a"
+    $secureStringPwd = $password | ConvertTo-SecureString -AsPlainText -Force
+    $mycreds = New-Object System.Management.Automation.PSCredential ("x_cognosante_authentication", $secureStringPwd)
 
     try {
         if($restMethod -eq "Get"){
             if($headers.count -eq 0){
-                $restresponse=Invoke-RestMethod -URI $resturl -ContentType "application/json" -Method GET -Headers $headers
+                $restresponse=Invoke-RestMethod -URI $resturl -ContentType "application/json" -Method GET  -Credential $mycreds -Headers $headers
             }else{
-                $restresponse=Invoke-RestMethod -URI $resturl -ContentType "application/json" -Method GET
+                $restresponse=Invoke-RestMethod -URI $resturl -ContentType "application/json" -Method GET  -Credential $mycreds
             }
         }
         write-output $restresponse|ConvertTo-JSON
