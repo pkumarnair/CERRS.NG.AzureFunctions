@@ -45,12 +45,12 @@ function Execute-RestRequest{
     }
 
     if($restMethod){
-        $restUrl+="?$restparams"
+        $restUrl=$restUrl+"?$restparams"
     }
-
 
     write-output "---------------------------"
     write-output $restUrl
+    write-output $restparams
     write-output $headers
     write-output "---------------------------"
 
