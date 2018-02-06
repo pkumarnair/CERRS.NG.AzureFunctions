@@ -50,7 +50,6 @@ function Execute-RestRequest{
 
     write-output "---------------------------"
     write-output $restUrl
-    write-output $restparams
     write-output $headers|convertto-JSON
     write-output "---------------------------"
 
@@ -61,9 +60,9 @@ function Execute-RestRequest{
     try {
         if($restMethod -eq "Get"){
             if($headers.count -eq 0){
-                $restresponse=Invoke-RestMethod -URI $resturl -ContentType "application/json" -Method GET  -Credential $mycreds -Headers $headers
-            }else{
                 $restresponse=Invoke-RestMethod -URI $resturl -ContentType "application/json" -Method GET  -Credential $mycreds
+            }else{
+                $restresponse=Invoke-RestMethod -URI $resturl -ContentType "application/json" -Method GET  -Credential $mycreds -Headers $headers
             }
         }
         write-output $restresponse|ConvertTo-JSON
