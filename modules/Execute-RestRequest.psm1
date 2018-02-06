@@ -31,9 +31,11 @@ function Execute-RestRequest{
             $key,$val=$key.split("-")
             $key=$val -join "-"
             if ($restparams){
-                $restparams+="&$val=$value"      
+                $restparams+="&$val=$value"
+                write-output $restparams      
             }else{
                 $restparams+="$val=$value"      
+                write-output $restparams      
             }
         }elseIf($key -Match "header-*"){
             $key,$val=$key.split("-")
