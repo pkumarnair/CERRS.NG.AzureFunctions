@@ -32,6 +32,20 @@
 			]
 		},
 		{
+			"eventTrigger":"ExecuteRestAPI",
+			"eventDescription":"Execute a Rest API",
+			"eventFunction":"Execute-RestRequest",
+			"eventParams":[
+				{"key":"resturl","value":"https://mcr-cc.test.cognosante.cc/v1/AddressInfo"},
+				{"key":"restMethod","value":"Get"},
+				{"key":"getparams-street","value":"street=+509+Adams+Ave+Apt+1A+Cape+Canaveral+FL+32920"},
+				{"key":"header-callingApp","value":"TestFramework"},
+				{"key":"header-callingUser","value":"AutomationUser"},
+				{"key":"header-x-cognosante-authentication","value":"6d5d56f7cf494134a96cc6910549341a"},
+				{"key":"header-Authorization","value":"Basic eF9jb2dub3NhbnRlX2F1dGhlbnRpY2F0aW9uOjZkNWQ1NmY3Y2Y0OTQxMzRhOTZjYzY5MTA1NDkzNDFh"}
+			]
+		},
+		{
 			"eventTrigger":"StartCaseClassification",
 			"eventDescription":"Case Classification",
 			"eventFunction":"Initiate-Livy",
