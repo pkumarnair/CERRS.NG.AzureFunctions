@@ -31,14 +31,14 @@ function Execute-RestRequest{
             $key,$val=$key.split("-")
             $key=$val -join "-"
             if ($restparams){
-                $restparams+="&$val=$value"
+                $restparams+="&$key=$value"
             }else{
-                $restparams+="$val=$value"      
+                $restparams+="$key=$value"      
             }
         }elseIf($key -Match "header-*"){
             $key,$val=$key.split("-")
             $key=$val -join "-"
-            $headers.Add($val, $value)
+            $headers.Add($key, $value)
         }else{
 
         }
