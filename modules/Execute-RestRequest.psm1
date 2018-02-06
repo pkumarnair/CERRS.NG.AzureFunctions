@@ -48,6 +48,12 @@ function Execute-RestRequest{
         $restUrl+="?$restparams"
     }
 
+
+    write-output "---------------------------"
+    write-output $restUrl
+    write-output $headers
+    write-output "---------------------------"
+
     try {
         if($restMethod -eq "Get"){
             if($headers.count -eq 0){
