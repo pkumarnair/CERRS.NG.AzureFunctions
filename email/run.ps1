@@ -35,7 +35,7 @@ if ($email.body){
 }
 
 try{
-   Send-MailMessage -To $emailinfo.to -Body $body -Subject $emailinfo.subject  -UseSsl -Port $env:smtpport -SmtpServer $enf:smtpserver -From $from -Credential $creds
+   Send-MailMessage -To $emailinfo.to -Body $body -Subject $emailinfo.subject  -UseSsl -Port $env:smtpport -SmtpServer $env:smtpserver -From $from -Credential $creds
 }catch{
     $_
 }
