@@ -5,8 +5,8 @@ function Initiate-Parallel-Requests{
         [string]$params
     )
 
-    Import-Module "D:\home\site\wwwroot\modules\AzureRM.Profile\4.2.0"
-    Import-Module "D:\home\site\wwwroot\modules\Azure.Storage\4.1.0"
+    Import-Module "D:\home\site\wwwroot\modules\AzureRM.Profile\4.2.0\AzureRM.Profile.psd1"
+    Import-Module "D:\home\site\wwwroot\modules\Azure.Storage\4.1.0\Azure.Storage.psd1"
     $proj=""
     $storagekey=""
     $queuename=""
