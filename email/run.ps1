@@ -19,7 +19,7 @@ $to=""
 $from="caseautomationsupport@cognosante.com"
 
 $emailid="CGS\adm_pku"
-$emailpswrd = ConvertTo-SecureString $env:emailpswdsecstr
+$emailpswrd = ConvertTo-SecureString $env:emailpswdsecstr -asPlainText -Force
 $creds = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList $emailid, $emailpswrd
 
 if (-not ($emailinfo.to -And $emailinfo.subject)){
@@ -41,4 +41,4 @@ try{
 }
 
 
-
+    
