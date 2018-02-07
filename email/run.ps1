@@ -18,7 +18,7 @@ $body="Test"
 $to=""
 $from="caseautomationsupport@cognosante.com"
 
-$emailid="CGS\adm_pku"
+$emailid="AZ\pkumar"
 $emailpswrd = ConvertTo-SecureString $env:emailpswdsecstr -asPlainText -Force
 $creds = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList $emailid, $emailpswrd
 
