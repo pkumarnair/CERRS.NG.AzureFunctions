@@ -22,6 +22,7 @@ $emailid="AZ\pkumar"
 $emailpswrd = ConvertTo-SecureString $env:emailpswdsecstr -asPlainText -Force
 $creds = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList $emailid, $emailpswrd
 
+write-output $env:smtpport
 if (-not ($emailinfo.to -And $emailinfo.subject)){
     return
 }
