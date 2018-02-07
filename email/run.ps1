@@ -14,7 +14,7 @@
 $emailinfo = Get-Content $triggerInput|ConvertFrom-JSON
 write-output $emailinfo|ConvertTo-JSON
 
-$body="Test"
+$body="Hi, I am from Azure functions."
 $to=""
 $from="caseautomationsupport@cognosante.com"
 
