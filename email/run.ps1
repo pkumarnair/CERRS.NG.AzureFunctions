@@ -14,7 +14,7 @@
 $emailinfo = Get-Content $triggerInput|ConvertFrom-JSON
 write-output $emailinfo|ConvertTo-JSON
 
-$body=""
+$body="Test"
 $to=""
 $from="caseautomationsupport@cognosante.com"
 
