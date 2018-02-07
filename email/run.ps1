@@ -1,3 +1,4 @@
-$in = Get-Content $triggerInput -Raw
-$rgn = $env:region
+$in = Get-Content $triggerInput|ConvertFrom-JSON
+$rgn = $env:
+write-output $in
 
