@@ -18,7 +18,7 @@ $body="Hi, I am from Azure functions."
 $to=""
 $from="caseautomationsupport@cognosante.com"
 
-$emailid="AZ\pkumar"
+$emailid=$env:emailid
 $emailpswrd = ConvertTo-SecureString $env:emailpswdsecstr -asPlainText -Force
 $creds = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList $emailid, $emailpswrd
 

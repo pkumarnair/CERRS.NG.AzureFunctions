@@ -11,7 +11,7 @@
     {
       "type": "queue",
       "direction": "out",
-      "name": "$return",
+      "name": "emailMessage",
       "queueName": "email-queue",
       "connection": "AzureWebJobsStorage",
     }

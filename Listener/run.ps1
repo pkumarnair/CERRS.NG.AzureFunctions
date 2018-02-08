@@ -11,8 +11,14 @@ $eventFunc = ""
 $evntparms = ""
 
 $event = $listener.events| where { $_.eventTrigger -eq $eventname }
+$emailto=$listener.events.emailto
 $eventFunc = $event.eventFunction
 $evntparms = @(ForEach($_ in $event.eventParams){"$($_.key)=$($_.value)"}) -join "~"
+
+$emailinfo=@{}
+$emailinfo.Add("to",$emailto)
+$emailinfo.Add("subject",$eventname)
+$emailMessage=$emailinfo|ConvertTo-JSON
 
 if($evntparms){
     $evntparms ="proj=$proj~"+$evntparms
@@ -41,5 +47,5 @@ try{
 
 Write-Output "$(Get-Date -Format o) - Ended moduled at $eventFunc"
 
-remove-module $eventFunc
+remove-module $eventFunction
 #Write-Output $listenerjson
