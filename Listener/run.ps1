@@ -47,5 +47,5 @@ try{
 
 Write-Output "$(Get-Date -Format o) - Ended moduled at $eventFunc"
 
-remove-module $eventFunction
+#remove-module $eventFunction
 #Write-Output $listenerjson
