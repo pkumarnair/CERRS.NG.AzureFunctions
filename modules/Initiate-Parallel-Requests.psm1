@@ -5,8 +5,6 @@ function Initiate-Parallel-Requests{
         [string]$params
     )
 
-    Import-Module "D:\home\site\wwwroot\modules\AzureRM.Profile\4.2.0\AzureRM.Profile.psm1"
-    Import-Module "D:\home\site\wwwroot\modules\Azure.Storage\4.1.0\Azure.Storage.psm1"
     $proj=""
     $storagekey=""
     $queuename=""
@@ -47,6 +45,7 @@ function Initiate-Parallel-Requests{
     write-output "storagekey is $storagekey"
     write-output "messages is $messages"
 
+<#
     try{
         write-output "11111111111111111111111111111111111111111"
         $ctx=New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $storagekey -Environment AzureUSGovernment
@@ -57,45 +56,33 @@ function Initiate-Parallel-Requests{
         $_
         return
     }
-
+#>
     ForEach($message in $messages){
         try {
             $message=$proj+"-"+$message
-            #test-function $storageaccountname $storagekey $queuename $message 
+            WriteMessageToQueue $storageaccountname $storagekey "AzureUSGovernment" $queuename $message
+<#
             write-output "3333333333333333333333333333333333333333333"
             $queueMessage = New-Object -TypeName Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage -ArgumentList ($proj+"-"+$message)
             $queue.CloudQueue.AddMessage($queueMessage)
-        }catch{
+#>
+        }catch{ 
             $_
             return
         }
     }
-
     return
 }
-
-function test-function{
-    Param(
-        $storageaccountname,
-        $storagekey,
-        $queuename,
-        $message
-
-        )
-
-    try{
-        write-output "11111111111111111111111111111111111111111"
-        $ctx=New-AzureStorageContext -StorageAccountName $storageaccountname -StorageAccountKey $storagekey -Environment AzureUSGovernment
-        write-output "22222222222222222222222222222222222222222"
-        $queue = Get-AzureStorageQueue –Name $queuename –context $ctx
-        write-output "33333333333333333333333333333333333333333"
-        $queueMessage = New-Object -TypeName Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage -ArgumentList $message
-        write-output "44444444444444444444444444444444444444444"
-        $queue.CloudQueue.AddMessage($queueMessage)
-    }catch{
-        $_
-        return
-    }
-
-    return
-}
+function WriteMessageToQueue( $storageaccnt,$storageaccountkey,$environment, $queuename, $Message)
+    {   
+        try { 
+                $ctx = New-AzureStorageContext -StorageAccountName $storageaccnt -StorageAccountKey $storageaccountkey -Environment $environment
+                $queue = Get-AzureStorageQueue -name $queuename -context $ctx
+                $queueMessage = New-Object -TypeName Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage -ArgumentList $Message
+                $queue.CloudQueue.AddMessage($queueMessage) 
+        }
+        catch { 
+            $_
+        }
+    } 
+ 

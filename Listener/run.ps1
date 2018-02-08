@@ -3,6 +3,21 @@ $proj, $eventname = $in.split("-")
 $eventname = $eventname -join "-"
 $rgn = $env:region
 
+
+function WriteMessageToQueue( $storageaccnt,$storageaccountkey,$environment, $queuename, $Message)
+    {   
+        try { 
+                $ctx = New-AzureStorageContext -StorageAccountName $storageaccnt -StorageAccountKey $storageaccountkey -Environment $environment
+                $queue = Get-AzureStorageQueue -name $queuename -context $ctx
+                $queueMessage = New-Object -TypeName Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage -ArgumentList $Message
+                $queue.CloudQueue.AddMessage($queueMessage) 
+        }
+        catch { 
+            $_
+        }
+    } 
+ 
+ 
 $listenerfile="D:\home\site\wwwroot\configs\$rgn\$proj.json"
 
 $listener=(Get-Content $listenerfile -Raw)|ConvertFrom-Json
@@ -13,15 +28,19 @@ $evntparms = ""
 $event=$listener.events| where { $_.eventTrigger -eq $eventname }
 
 if ($listener.emailinfo){
+    $storageaccountname=$env:storageAccountName
+    $storagekey=$env:storageaccountkey
+    $queuename=$env:emailQueueName
     $emailinfo=@{}
     $emailinfo.Add("to",$listener.emailinfo.emailto)
     $emailinfo.Add("from",$listener.emailinfo.emailfrom)
     $emailinfo.Add("subject",$eventname)
     $emailMessage=$emailinfo|ConvertTo-JSON
+    WriteMessageToQueue $storageaccountname $storagekey "AzureUSGovernment" $queuename $emailMessage
     Write-Output "Wrote email" $emailMessage
 }
 
-if(-not $eventFunc){
+if(-not $event){
     Write-Output "Nothing to do"
     return
 }
@@ -58,3 +77,5 @@ Write-Output "$(Get-Date -Format o) - Ended moduled at $eventFunc"
 
 #remove-module $eventFunction
 #Write-Output $listenerjson
+
+

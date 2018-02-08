@@ -1,7 +1,7 @@
 {
 	"applicationName":"caseautomation",
 	"emailinfo":{
-		"emailto":["pradeep.kumar@cognosante.com"],
+		"emailto":["pradeep.kumar@cognosante.com","Jun.Yang@cognosante.com","Sharif.Berdi@cognosante.com"],
 		"emailfrom":"caseautomationsupport@cognosante.com"
 	},
 	"events":[
@@ -28,11 +28,14 @@
 			"eventDescription":"Create messages for parallel jobs",
 			"eventFunction":"Initiate-Parallel-Requests",
 			"eventParams":[
-				{"key":"queuename","value":"testqueue"},
+				{"key":"queuename","value":"env-listenerqueueName"},
 				{"key":"connectionstring","value":"env-AzureWebJobsStorage"},
 				{"key":"storagekey","value":"env-storageaccountkey"},
 				{"key":"storageaccountname","value":"env-storageAccountName"},
-				{"key":"message","value":"StartFFMParquetConversion"}
+				{"key":"message","value":"StartFFMParquetConversion"},
+				{"key":"message","value":"StartRCNOParquetConversion"},
+				{"key":"message","value":"Start1095AParquetConversion"},
+				{"key":"message","value":"StartCaseClassification"}
 			]
 		},
 		{
@@ -65,7 +68,7 @@
 				{"key":"pyargs","value":"hicsArchive/"},
 				{"key":"pyargs","value":"ClassificationOutput/"},
 				{"key":"pyargs","value":"StartAndEndDateOutPut.csv"},
-				{"key":"pyfiles","value":"functions.py"},
+				{"key":"pyfiles","value":"functions.py"},	
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
 			]
 		},
