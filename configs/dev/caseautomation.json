@@ -1,6 +1,9 @@
 {
 	"applicationName":"caseautomation",
-	"emailto":["pradeep.kumar@cognosante.com","Jun.Yang@cognosante.com","Sharif.Berdi@cognosante.com"],
+	"emailinfo":{
+		"emailto":["pradeep.kumar@cognosante.com"],
+		"emailfrom":"caseautomationsupport@cognosante.com"
+	},
 	"events":[
 		{
 			"eventTrigger":"CreateCluster",

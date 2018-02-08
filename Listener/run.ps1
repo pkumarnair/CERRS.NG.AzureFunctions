@@ -10,15 +10,24 @@ Write-Output "Importing module $($listener.applicationName)"
 $eventFunc = ""
 $evntparms = ""
 
-$event = $listener.events| where { $_.eventTrigger -eq $eventname }
-$emailto=$listener.events.emailto
-$eventFunc = $event.eventFunction
-$evntparms = @(ForEach($_ in $event.eventParams){"$($_.key)=$($_.value)"}) -join "~"
+$event=$listener.events| where { $_.eventTrigger -eq $eventname }
 
-$emailinfo=@{}
-$emailinfo.Add("to",$emailto)
-$emailinfo.Add("subject",$eventname)
-$emailMessage=$emailinfo|ConvertTo-JSON
+if ($listener.emailinfo){
+    $emailinfo=@{}
+    $emailinfo.Add("to",$listener.emailinfo.emailto)
+    $emailinfo.Add("from",$listener.emailinfo.emailfrom)
+    $emailinfo.Add("subject",$eventname)
+    $emailMessage=$emailinfo|ConvertTo-JSON
+    Write-Output "Wrote email" $emailMessage
+}
+
+if(-not $eventFunc){
+    Write-Output "Nothing to do"
+    return
+}
+
+$eventFunc=$event.eventFunction
+$evntparms=@(ForEach($_ in $event.eventParams){"$($_.key)=$($_.value)"}) -join "~"
 
 if($evntparms){
     $evntparms ="proj=$proj~"+$evntparms
