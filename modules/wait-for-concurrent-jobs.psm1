@@ -1,4 +1,4 @@
-function Initiate-Parallel-Requests{
+function Wait-For-Concurrent-Jobs{
     Param
     (
         [Parameter(Mandatory)]
@@ -28,7 +28,7 @@ function Initiate-Parallel-Requests{
 
         if($key -eq "blobname"){
           $blobname=$value
-        }elseIf($key -eq "checkmessage"){
+        }elseIf($key -eq "waitmessage"){
             $messages+=$value
         }elseIf($key -eq "currentmessage"){
             $currentmessage=$value

@@ -101,6 +101,20 @@
 			"eventParams":[
 				{"key":"mainfile","value":"test.py"}
 			]
+		},
+		{
+			"eventTrigger":"WaitForConcurrentJobs",
+			"eventDescription":"Waits for jobs that run conncurrently to trigger the next job",
+			"eventFunction":"Wait-For-Concurrent-Jobs",
+			"eventParams":[
+				{"key":"blobname","value":"jobwait/waitfordataextraction"},
+				{"key":"currentmessage","value":"StartDataExtraction"},
+				{"key":"outmessage","value":"StartDataExtraction"},
+				{"key":"waitmessage","value":"FFMParquetConversionComplete"},
+				{"key":"waitmessage","value":"RCNOParquetConversionComplete"},
+				{"key":"waitmessage","value":"1095AParquetConversionComplete"},
+				{"key":"waitmessage","value":"CaseClassificationComplete"}
+			]
 		}
 	]
 }
