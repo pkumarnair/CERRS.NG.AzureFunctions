@@ -1,7 +1,7 @@
 {
 	"applicationName":"caseautomation",
 	"emailinfo":{
-		"emailto":["pradeep.kumar@cognosante.com","Jun.Yang@cognosante.com","Sharif.Berdi@cognosante.com"],
+		"emailto":["pradeep.kumar@cognosante.com"],
 		"emailfrom":"caseautomationsupport@cognosante.com"
 	},
 	"events":[
