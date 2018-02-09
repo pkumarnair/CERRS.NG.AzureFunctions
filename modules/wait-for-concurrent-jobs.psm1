@@ -5,11 +5,11 @@ function Wait-For-Concurrent-Jobs{
         [string]$params
     )
 
-    #$file = New-TemporaryFile 
     $queuename=$env:listenerqueueName
     $storageaccnt=$env:storageAccountName
     $storageaccountkey=$env:storageaccountkey
     $container=$env:clustercontainer
+    $environment="AzureUSGovernment"
     $blobname=""
     $messages=@()
     $outmessage=""
@@ -52,13 +52,13 @@ function Wait-For-Concurrent-Jobs{
     try{
         if(($files|Measure-Object –Line).Lines -ge ($messages.count)){
             $message=$proj+"-"+$outmessage
-            WriteMessageToQueue $storageaccountname $storagekey "AzureUSGovernment" $queuename $message
-            Remove-AzureStorageBlob -Container $container -Blob $blobname -Context $ctx -Force            
+            #WriteMessageToQueue $storageaccountname $storagekey $environment $queuename $message
+            Remove-AzureStorageBlob -Container $container -Blob $blobname -Context $ctx -Force    
         }else{
             $tempfile = New-TemporaryFile 
             Set-Content -Path $tempfile -Value $files
-            Set-AzureStorageBlobContent -Container $container -Blob $blobname -Context $ctx -File $file -Force
-            Remove-Item $file -Force -ErrorAction:SilentlyContinue
+            Set-AzureStorageBlobContent -Container $container -Blob $blobname -Context $ctx -File $tempfile -Force
+            Remove-Item $tempfile -Force -ErrorAction:SilentlyContinue
         }
     }catch{
         $_
@@ -74,4 +74,4 @@ function WriteMessageToQueue( $storageaccnt,$storageaccountkey,$environment, $qu
     }catch{ 
         $_
     }
-} 
+}
