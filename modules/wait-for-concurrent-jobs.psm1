@@ -60,6 +60,8 @@ function Wait-For-Concurrent-Jobs{
             Set-AzureStorageBlobContent -Container $container -Blob $blobname -Context $ctx -File $file -Force
             Remove-Item $file -Force -ErrorAction:SilentlyContinue
         }
+    }catch{
+        $_
     }
 }
 
