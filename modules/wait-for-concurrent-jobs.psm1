@@ -48,20 +48,25 @@ function Wait-For-Concurrent-Jobs{
     }
 
     $files+=$currentmessage
-    $message=$proj+"-"+$outmessage
-
-    try{
-        if(($files|Measure-Object –Line).Lines -ge ($messages.count)){
+    $filescount=($files|Measure-Object –Line).Lines
+    if($filescount -ge $messages.count)
+    {
+        $message=$proj+"-"+$outmessage
+        try{
             #WriteMessageToQueue $storageaccountname $storagekey $environment $queuename $message
             Remove-AzureStorageBlob -Container $container -Blob $blobname -Context $ctx -Force    
-        }else{
-            $tempfile = New-TemporaryFile 
+        }catch{
+            $_
+        }
+    }else{
+        $tempfile = New-TemporaryFile 
+        try{
             Set-Content -Path $tempfile -Value $files
             Set-AzureStorageBlobContent -Container $container -Blob $blobname -Context $ctx -File $tempfile -Force
             Remove-Item $tempfile -Force -ErrorAction:SilentlyContinue
+        }catch{
+            $_
         }
-    }catch{
-        $_
     }
 }
 
