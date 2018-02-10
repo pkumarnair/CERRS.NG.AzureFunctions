@@ -6,7 +6,7 @@
 	},
 	"events":[
 		{
-			"eventTrigger":"CreateCluster",
+			"eventTrigger":"StartCaseAutomation",
 			"eventDescription":"Create a cluster",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
@@ -39,26 +39,12 @@
 			]
 		},
 		{
-			"eventTrigger":"ExecuteRestAPI",
-			"eventDescription":"Execute a Rest API",
-			"eventFunction":"Execute-RestRequest",
-			"eventParams":[
-				{"key":"resturl","value":"https://mcr-cc.test.cognosante.cc/v1/AddressInfo"},
-				{"key":"restMethod","value":"Get"},
-				{"key":"restparams-street","value":"+509+Adams+Ave+Apt+1A+Cape+Canaveral+FL+32920"},
-				{"key":"header-callingApp","value":"TestFramework"},
-				{"key":"header-callingUser","value":"AutomationUser"},
-				{"key":"header-x-cognosante-authentication","value":"6d5d56f7cf494134a96cc6910549341a"},
-				{"key":"header-Authorization","value":"Basic eF9jb2dub3NhbnRlX2F1dGhlbnRpY2F0aW9uOjZkNWQ1NmY3Y2Y0OTQxMzRhOTZjYzY5MTA1NDkzNDFh"}
-			]
-		},
-		{
 			"eventTrigger":"StartCaseClassification",
 			"eventDescription":"Case Classification",
 			"eventFunction":"Initiate-Livy",
 			"eventParams":[
 				{"key":"mainfile","value":"CaseClassification.py"},
-				{"key":"outMessage","value":"ClassificationCompleted"},
+				{"key":"outMessage","value":"ConversionCompleted"},
 				{"key":"pyargs","value":"env-storageAccountName"},
 				{"key":"pyargs","value":"env-storageaccountkey"},
 				{"key":"pyargs","value":"env-endpoint"},
@@ -73,7 +59,69 @@
 			]
 		},
 		{
-			"eventTrigger":"ClassificationCompleted",
+			"eventTrigger":"StartFFMParquetConversion",
+			"eventDescription":"Convert FFM File to Parquet",
+			"eventFunction":"Initiate-Livy",
+			"eventParams":[
+				{"key":"mainfile","value":"jobs/FFM_ConvertToParquet.py"},
+				{"key":"outMessage","value":"ConversionCompleted"},
+				{"key":"pyargs","value":"env-storageAccountName"},
+				{"key":"pyargs","value":"env-storageaccountkey"},
+				{"key":"pyargs","value":"env-endpoint"},
+				{"key":"pyargs","value":"env-listenerqueueName"},
+				{"key":"pyargs","value":"env-clustercontainer"},
+				{"key":"pyfiles","value":"jobs/functions/functions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"Start1095AParquetConversion",
+			"eventDescription":"Convert 1095A File to Parquet",
+			"eventFunction":"Initiate-Livy",
+			"eventParams":[
+				{"key":"mainfile","value":"jobs/1095A_ConvertToParquet.py"},
+				{"key":"outMessage","value":"ConversionCompleted"},
+				{"key":"pyargs","value":"env-storageAccountName"},
+				{"key":"pyargs","value":"env-storageaccountkey"},
+				{"key":"pyargs","value":"env-endpoint"},
+				{"key":"pyargs","value":"env-listenerqueueName"},
+				{"key":"pyargs","value":"env-clustercontainer"},
+				{"key":"pyfiles","value":"jobs/functions/functions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"StartRCNOParquetConversion",
+			"eventDescription":"Convert RCNO File to Parquet",
+			"eventFunction":"Initiate-Livy",
+			"eventParams":[
+				{"key":"mainfile","value":"jobs/RCNO_ConvertToParquet.py"},
+				{"key":"outMessage","value":"ConversionCompleted"},
+				{"key":"pyargs","value":"env-storageAccountName"},
+				{"key":"pyargs","value":"env-storageaccountkey"},
+				{"key":"pyargs","value":"env-endpoint"},
+				{"key":"pyargs","value":"env-listenerqueueName"},
+				{"key":"pyargs","value":"env-clustercontainer"},
+				{"key":"pyfiles","value":"jobs/functions/functions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"ConversionCompleted",
+			"eventDescription":"Waits for jobs that run conncurrently to trigger the next job",
+			"eventFunction":"Wait-For-Concurrent-Jobs",
+			"eventParams":[
+				{"key":"blobname","value":"jobwait/waitfordataextraction"},
+				{"key":"currentmessage","value":"StartDataExtraction"},
+				{"key":"outmessage","value":"StartDataExtraction"},
+				{"key":"waitmessage","value":"FFMParquetConversionComplete"},
+				{"key":"waitmessage","value":"RCNOParquetConversionComplete"},
+				{"key":"waitmessage","value":"1095AParquetConversionComplete"},
+				{"key":"waitmessage","value":"CaseClassificationComplete"}
+			]
+		},
+		{
+			"eventTrigger":"StartDataExtraction",
 			"eventDescription":"Data Extraction from FFM, 1095A and RCNO",
 			"eventFunction":"Initiate-Livy",
 			"eventParams":[
@@ -90,30 +138,22 @@
 				{"key":"pyargs","value":"wasbs://ffm-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
 				{"key":"pyargs","value":"wasbs://1095a-parquet@cerrscaseautomation.blob.core.usgovcloudapi.net//part*"},
 				{"key":"pyargs","value":"Caseoutput.csv"},
-				{"key":"pyfiles","value":"functions.py"},
+				{"key":"pyfiles","value":"jobs/functions/functions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
 			]
 		},
 		{
-			"eventTrigger":"ClusterStarted",
-			"eventDescription":"Test Livy",
-			"eventFunction":"Initiate-Livy",
+			"eventTrigger":"ExecuteRestAPI",
+			"eventDescription":"Execute a Rest API",
+			"eventFunction":"Execute-RestRequest",
 			"eventParams":[
-				{"key":"mainfile","value":"test.py"}
-			]
-		},
-		{
-			"eventTrigger":"WaitForConcurrentJobs",
-			"eventDescription":"Waits for jobs that run conncurrently to trigger the next job",
-			"eventFunction":"Wait-For-Concurrent-Jobs",
-			"eventParams":[
-				{"key":"blobname","value":"jobwait/waitfordataextraction"},
-				{"key":"currentmessage","value":"StartDataExtraction"},
-				{"key":"outmessage","value":"StartDataExtraction"},
-				{"key":"waitmessage","value":"FFMParquetConversionComplete"},
-				{"key":"waitmessage","value":"RCNOParquetConversionComplete"},
-				{"key":"waitmessage","value":"1095AParquetConversionComplete"},
-				{"key":"waitmessage","value":"CaseClassificationComplete"}
+				{"key":"resturl","value":"https://mcr-cc.test.cognosante.cc/v1/AddressInfo"},
+				{"key":"restMethod","value":"Get"},
+				{"key":"restparams-street","value":"+509+Adams+Ave+Apt+1A+Cape+Canaveral+FL+32920"},
+				{"key":"header-callingApp","value":"TestFramework"},
+				{"key":"header-callingUser","value":"AutomationUser"},
+				{"key":"header-x-cognosante-authentication","value":"6d5d56f7cf494134a96cc6910549341a"},
+				{"key":"header-Authorization","value":"Basic eF9jb2dub3NhbnRlX2F1dGhlbnRpY2F0aW9uOjZkNWQ1NmY3Y2Y0OTQxMzRhOTZjYzY5MTA1NDkzNDFh"}
 			]
 		}
 	]
