@@ -36,7 +36,7 @@ if ($listener.emailinfo){
     $emailinfo.Add("from",$listener.emailinfo.emailfrom)
     $emailinfo.Add("subject",$eventname)
     $emailMessage=$emailinfo|ConvertTo-JSON
-    #WriteMessageToQueue $storageaccountname $storagekey "AzureUSGovernment" $queuename $emailMessage
+    WriteMessageToQueue $storageaccountname $storagekey "AzureUSGovernment" $queuename $emailMessage
     Write-Output "Wrote email" $emailMessage
 }
 
