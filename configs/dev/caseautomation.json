@@ -133,26 +133,46 @@
 			"eventDescription":"Data Extraction from FFM, 1095A and RCNO",
 			"eventFunction":"Initiate-Livy",
 			"eventParams":[
-				{"key":"mainfile","value":"ca-python//src//CaseDataExtraction.py"},
+				{"key":"mainfile","value":"ca-python/src/CaseDataExtraction.py"},
 				{"key":"outMessage","value":"DataExtractionCompleted"},
 				{"key":"pyargs","value":"env-storageAccountName"},
 				{"key":"pyargs","value":"env-storageaccountkey"},
 				{"key":"pyargs","value":"env-endpoint"},
 				{"key":"pyargs","value":"env-clustercontainer"},
 				{"key":"pyargs","value":"env-listenerqueueName"},
-				{"key":"pyargs","value":"ca-outputs//classification//ClassifiedCases.csv"},
-				{"key":"pyargs","value":"ca-parquet//rcno//"},
-				{"key":"pyargs","value":"ca-parquet//ffm//"},
-				{"key":"pyargs","value":"ca-parquet//1095a//"},
-				{"key":"pyargs","value":"ca-outputs//extraction//"},
+				{"key":"pyargs","value":"ca-outputs/classification/ClassifiedCases.csv"},
+				{"key":"pyargs","value":"ca-parquet/rcno/"},
+				{"key":"pyargs","value":"ca-parquet/ffm/"},
+				{"key":"pyargs","value":"ca-parquet/1095a/"},
+				{"key":"pyargs","value":"ca-outputs/extraction/"},
 				{"key":"pyargs","value":"CaseDataExtract.csv"},
 				{"key":"pyargs","value":"cerrscafile"},
-				{"key":"pyfiles","value":"ca-python//src//cafunctions.py"},
+				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
 			]
 		},
 		{
-			"eventTrigger":"DeleteCluster",
+			"eventTrigger":"DataExtractionCompleted",
+			"eventDescription":"Case Compare which compares data from HICS, RCNO, FFM and 1095A and outputs recoomendations",
+			"eventFunction":"Initiate-Livy",
+			"eventParams":[
+				{"key":"mainfile","value":"ca-python/src/CaseCompare.py"},
+				{"key":"outMessage","value":"CaseCompareCompleted"},
+				{"key":"pyargs","value":"env-storageAccountName"},
+				{"key":"pyargs","value":"env-storageaccountkey"},
+				{"key":"pyargs","value":"env-endpoint"},
+				{"key":"pyargs","value":"env-clustercontainer"},
+				{"key":"pyargs","value":"env-listenerqueueName"},
+				{"key":"pyargs","value":"ca-outputs/extraction/CaseDataExtract.csv"},
+				{"key":"pyargs","value":"ca-outputs/compare/"},
+				{"key":"pyargs","value":"Caseoutput.csv"},
+				{"key":"pyargs","value":"cerrscafile"},
+				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"CaseCompareCompleted",
 			"eventDescription":"Delete a cluster",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
@@ -163,7 +183,7 @@
  				{"key":"clusterName","value":"env-clustername"},
  				{"key":"storageAccountName","value":"env-storageAccountName"},
 				{"key":"queueName","value":"env-listenerqueueName"},
-				{"key":"outMessage","value":"ClusterCreated"}
+				{"key":"outMessage","value":"ClusterDeleted"}
 			]
 		},
 		{
@@ -171,7 +191,7 @@
 			"eventDescription":"Execute a Rest API",
 			"eventFunction":"Execute-RestRequest",
 			"eventParams":[
-				{"key":"resturl","value":"https://mcr-cc.test.cognosante.cc/v1/AddressInfo"},
+				{"key":"resturl","value":"https:/mcr-cc.test.cognosante.cc/v1/AddressInfo"},
 				{"key":"restMethod","value":"Get"},
 				{"key":"restparams-street","value":"+509+Adams+Ave+Apt+1A+Cape+Canaveral+FL+32920"},
 				{"key":"header-callingApp","value":"TestFramework"},

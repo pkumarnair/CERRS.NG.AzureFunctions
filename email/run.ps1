@@ -13,8 +13,7 @@
 #
 $emailinfo = Get-Content $triggerInput|ConvertFrom-JSON
 write-output $emailinfo|ConvertTo-JSON
-
-$body="Hi, I am from Azure functions."
+$body="This message is from the Case Automation system."
 $to=""
 $from="caseautomationsupport@cognosante.com"
 
@@ -39,6 +38,7 @@ try{
    Send-MailMessage -To $emailinfo.to -Body $body -Subject $emailinfo.subject  -UseSsl -Port $env:smtpport -SmtpServer $env:smtpserver -From $from -Credential $creds
 }catch{
     $_
+    return
 }
 
 
