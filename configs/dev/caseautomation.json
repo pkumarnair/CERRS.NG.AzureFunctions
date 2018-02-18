@@ -20,7 +20,7 @@
  				{"key":"clusterName","value":"env-clustername"},
 				{"key":"outMessage","value":"ClusterCreated"},
 				{"key":"pswrd","value":"env-clusterpassword"},
-				{"key":"ScriptActionURI","value":"https://cerrscaseautomationdev.blob.core.usgovcloudapi.net/cerrscablob"},
+				{"key":"ScriptActionURI","value":"https://cerrscaseautomationdev.blob.core.usgovcloudapi.net/cerrscablob/ca-scriptaction"},
 				{"key":"queueName","value":"env-listenerqueueName"}
 			]
 		},
