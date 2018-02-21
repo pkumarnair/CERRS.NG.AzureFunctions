@@ -146,7 +146,6 @@
 				{"key":"pyargs","value":"ca-parquet/1095a/"},
 				{"key":"pyargs","value":"ca-outputs/extraction/"},
 				{"key":"pyargs","value":"CaseDataExtract.csv"},
-				{"key":"pyargs","value":"cerrscafile"},
 				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
 			]
