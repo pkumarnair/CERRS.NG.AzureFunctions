@@ -11,7 +11,7 @@
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
 				{"key":"runbookName","value":"Create-CaseAutomationCluster"},
-				{"key":"resourceGroupName","value":"env-spnresourcegroupname"},
+				{"key":"resourceGroupName","value":"CERRS-PROD-RG"},
 				{"key":"automationAccount","value":"env-automationaccountname"},
  				{"key":"location","value":"env-location"},
  				{"key":"subscriptionId","value":"env-subscriptionid"},
@@ -21,7 +21,8 @@
 				{"key":"outMessage","value":"ClusterCreated"},
 				{"key":"pswrd","value":"env-clusterpassword"},
 				{"key":"ScriptActionURI","value":"https://cerrsimplhdispark.blob.core.usgovcloudapi.net/cerrscablob/ca-scriptaction"},
-				{"key":"queueName","value":"env-listenerqueueName"}
+				{"key":"queueName","value":"env-listenerqueueName"},
+				{"key":"clusterResourceGroup","value":"env-spnresourcegroupname"}
 			]
 		},
 		{
@@ -176,13 +177,14 @@
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
 				{"key":"runbookName","value":"Delete-CaseAutomationCluster"},
-				{"key":"resourceGroupName","value":"env-spnresourcegroupname"},
+				{"key":"resourceGroupName","value":"CERRS-PROD-RG"},
 				{"key":"automationAccount","value":"env-automationaccountname"},
  				{"key":"subscriptionId","value":"env-subscriptionid"},
  				{"key":"clusterName","value":"env-clustername"},
  				{"key":"storageAccountName","value":"env-storageAccountName"},
 				{"key":"queueName","value":"env-listenerqueueName"},
-				{"key":"outMessage","value":"ClusterDeleted"}
+				{"key":"outMessage","value":"ClusterDeleted"},
+				{"key":"clusterResourceGroup","value":"env-spnresourcegroupname"}
 			]
 		},
 		{
