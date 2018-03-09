@@ -20,9 +20,11 @@
  				{"key":"clusterName","value":"env-clustername"},
 				{"key":"outMessage","value":"ClusterCreated"},
 				{"key":"pswrd","value":"env-clusterpassword"},
-				{"key":"ScriptActionURI","value":"https://cerrsimplhdispark.blob.core.usgovcloudapi.net/cerrscablob/ca-scriptaction"},
+				{"key":"ScriptActionURI","value":"https://cerrsimplhdispark.blob.core.usgovcloudapi.net/cerrscaseautomation/ca-scriptaction"},
 				{"key":"queueName","value":"env-listenerqueueName"},
-				{"key":"clusterResourceGroup","value":"env-spnresourcegroupname"}
+				{"key":"clusterResourceGroup","value":"env-spnresourcegroupname"},
+				{"key":"VirtualNetworkId","value":"env-VirtualNetworkId"},
+				{"key":"SubnetName","value":"env-SubnetName"}
 			]
 		},
 		{
