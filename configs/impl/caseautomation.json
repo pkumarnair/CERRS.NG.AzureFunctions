@@ -202,6 +202,33 @@
 				{"key":"header-x-cognosante-authentication","value":"6d5d56f7cf494134a96cc6910549341a"},
 				{"key":"header-Authorization","value":"Basic eF9jb2dub3NhbnRlX2F1dGhlbnRpY2F0aW9uOjZkNWQ1NmY3Y2Y0OTQxMzRhOTZjYzY5MTA1NDkzNDFh"}
 			]
+		},
+			{
+			"eventTrigger":"RBStartCaseClassification",
+			"eventDescription":"Case Classification",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+			    {"key":"runbookName","value":"StartCaseClassication"},
+			    {"key":"resourceGroupName","value":"CERRS-DEV-TEST-RG"},
+				{"key":"automationAccount","value":"env-automationaccountname"},
+				{"key":"clusteruser","value":"env-clusteruser"},
+				{"key":"SecurePassword","value":"env-clusterpassword"},
+				{"key":"clustername","value":"env-clustername"},
+				{"key":"mainfile","value":"ca-python/src/CaseClassification.py"},
+				{"key":"outMessage","value":"ConversionCompleted"},
+				{"key":"pyargs","value":"env-storageAccountName"},
+				{"key":"pyargs","value":"env-storageaccountkey"},
+				{"key":"pyargs","value":"env-endpoint"},
+				{"key":"pyargs","value":"env-clustercontainer"},
+				{"key":"pyargs","value":"env-listenerqueueName"},
+				{"key":"pyargs","value":"ca-python/pickle/"},
+				{"key":"pyargs","value":"hics_model.sav2"},
+				{"key":"pyargs","value":"ca-inputs/hics/"},
+				{"key":"pyargs","value":"ca-outputs/classification/"},
+				{"key":"pyargs","value":"ClassifiedCases.csv"},
+				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},	
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
 		}
 	]
 }

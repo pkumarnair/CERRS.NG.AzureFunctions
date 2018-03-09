@@ -57,10 +57,10 @@ function Execute-Runbook{
             $RbParams.add("pyfiles",$pyfiles)
     }
     If($pyargs){
-            $RbParams.add("args",$pyargs)
+            $RbParams.add("pyargs",$pyargs)
     }
     If($pyconf){
-            $RbParams.add("conf",$pyconf)
+            $RbParams.add("pyconf",$pyconf)
     }
 
     write-output "The Runbook job parameters ------------"
