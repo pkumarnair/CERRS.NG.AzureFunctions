@@ -10,6 +10,9 @@ function Execute-Runbook{
     $RunbookName=""
     $ResourceGroupName=""
     $RbParams=@{}
+    $pyfiles=@()
+    $pyconf=@{}
+    $pyargs=@()
 
     write-output "Starting Execute-Runbook------------"
     write-output $params
@@ -32,14 +35,32 @@ function Execute-Runbook{
           $proj=$value
         }ElseIf($key -eq "outMessage"){
           $value=$proj+"-"+$value
+        }elseif($key -eq "pyfiles"){
+          $pyfiles+=$joblocation+$value
+        }elseIf($key -eq "pyargs"){
+          $pyargs+=$value
+        }elseIf($key -Match "pyconf-*"){
+          $key1,$val=$key.split("-")
+          $key1=$val -join "-"
+          $pyconf.add($key1,$value)
         }else{
 
         }
 
         write-output "Key is $key, and value is $value"
-        If($key -ne "proj"){
+        If($key -ne "proj" -and $key -ne "pyfiles" -and $key -ne "pyargs" -and -not($key -Match "pyconf-*")){
             $RbParams.add($key,$value)
         }
+    }
+
+    If($pyfiles){
+            $RbParams.add("pyfiles",$pyfiles)
+    }
+    If($pyargs){
+            $RbParams.add("args",$pyargs)
+    }
+    If($pyconf){
+            $RbParams.add("conf",$pyconf)
     }
 
     write-output "The Runbook job parameters ------------"
