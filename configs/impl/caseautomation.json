@@ -209,7 +209,7 @@
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
 			    {"key":"runbookName","value":"StartCaseClassication"},
-			    {"key":"resourceGroupName","value":"CERRS-DEV-TEST-RG"},
+			    {"key":"resourceGroupName","value":"CERRS-PROD-RG"},
 				{"key":"automationAccount","value":"env-automationaccountname"},
 				{"key":"clusteruser","value":"env-clusteruser"},
 				{"key":"SecurePassword","value":"env-clusterpassword"},
