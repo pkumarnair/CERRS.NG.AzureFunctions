@@ -11,17 +11,11 @@ function Initiate-Parallel-Requests{
     $storageaccountname=""
     $connectionstring=""
     $messages=@()
+    $environment=$env:environment
     write-output "Inside Initiate-Parallel-Requests------------"
 
     ForEach($_ in $params.split("~")){
-        $key,$val=$_.split("=")
-        if($val.split("-")[0] -eq "env"){
-            $v=$val.split("-")[1]
-            $value = (get-item env:$v).value
-        }else{
-            $value = $val
-        }
-
+        $key,$value=$_.split("=")
         if($key -eq "queuename"){
           $queuename=$value
         }elseIf($key -eq "storagekey"){
@@ -48,7 +42,7 @@ function Initiate-Parallel-Requests{
     ForEach($message in $messages){
         try {
             $message=$proj+"-"+$message
-            WriteMessageToQueue $storageaccountname $storagekey "AzureUSGovernment" $queuename $message
+            WriteMessageToQueue $storageaccountname $storagekey $environment $queuename $message
         }catch{ 
             $_
             return

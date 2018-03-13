@@ -14,18 +14,12 @@ function Initiate-Livy{
     $outmessage=""
 
     $joblocation=$env:pythonJobLocation
+    $livyendpoint=$env:livyendpoint
     #$joblocation="wasb://cerrscablob@cerrscaseautomationdev.blob.core.usgovcloudapi.net/"
     write-output "Inside Initiating Livy------------"
 
     ForEach($_ in $params.split("~")){
-        $key,$val=$_.split("=")
-        if($val.split("-")[0] -eq "env"){
-            $v=$val.split("-")[1]
-            $value = (get-item env:$v).value
-        }else{
-            $value = $val
-        }
-
+        $key,$value=$_.split("=")
         if($key -eq "pyfiles"){
           $pyfiles+=$joblocation+$value
         }elseIf($key -eq "pyargs"){
@@ -69,7 +63,7 @@ function Initiate-Livy{
     $cred = New-Object -typename System.Management.Automation.PSCredential -argumentlist $clusteruser, $SecurePassword
     $clustername=$env:clustername
 
-    $livyuri = "https://$clustername.azurehdinsight.us/livy/batches"
+    $livyuri = "https://$clustername.$livyendpoint/livy/batches"
     write-output "Initiating Livy Api call $livyurl"
 
     try {

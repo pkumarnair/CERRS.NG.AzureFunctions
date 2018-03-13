@@ -15,14 +15,7 @@ function Execute-RestRequest{
     write-output "Inside Execute RestRequest------------"
 
     ForEach($_ in $params.split("~")){
-        $key,$val=$_.split("=")
-        if($val.split("-")[0] -eq "env"){
-            $v=$val.split("-")[1]
-            $value = (get-item env:$v).value
-        }else{
-            $value = $val
-        }
-
+        $key,$value=$_.split("=")
         if($key -eq "resturl"){
           $restUrl=$value
         }elseIf($key -eq "restMethod"){

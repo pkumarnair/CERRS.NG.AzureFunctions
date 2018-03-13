@@ -9,7 +9,7 @@ function Wait-For-Concurrent-Jobs{
     $storageaccnt=$env:storageAccountName
     $storageaccountkey=$env:storageaccountkey
     $container=$env:clustercontainer
-    $environment="AzureUSGovernment"
+    $environment=$env:environment
     $blobname=""
     $messages=@()
     $outmessage=""
@@ -18,13 +18,7 @@ function Wait-For-Concurrent-Jobs{
     $files=""
 
     ForEach($_ in $params.split("~")){
-        $key,$val=$_.split("=")
-        if($val.split("-")[0] -eq "env"){
-            $v=$val.split("-")[1]
-            $value = (get-item env:$v).value
-        }else{
-            $value = $val
-        }
+        $key,$value=$_.split("=")
 
         if($key -eq "blobname"){
           $blobname=$value
@@ -41,7 +35,7 @@ function Wait-For-Concurrent-Jobs{
         }
     }
 
-    $ctx = New-AzureStorageContext -StorageAccountName $storageaccnt -StorageAccountKey $storageaccountkey -Environment AzureUSGovernment
+    $ctx = New-AzureStorageContext -StorageAccountName $storageaccnt -StorageAccountKey $storageaccountkey -Environment $environment
     $blobfile=Get-AzureStorageBlob -Container $container -Blob $blobname -Context $ctx  -ErrorAction Ignore
     if($blobfile){
        $files = $blobfile.ICloudBlob.DownloadText()
