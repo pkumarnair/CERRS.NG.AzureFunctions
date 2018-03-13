@@ -36,7 +36,8 @@ if ($listener.emailinfo){
     $emailinfo.Add("from",$listener.emailinfo.emailfrom)
     $emailinfo.Add("subject",$eventname)
     $emailMessage=$emailinfo|ConvertTo-JSON
-    WriteMessageToQueue $storageaccountname $storagekey "AzureUSGovernment" $queuename $emailMessage
+    $environment=$env:environment
+    WriteMessageToQueue $storageaccountname $storagekey $environment $queuename $emailMessage
     Write-Output "Wrote email" $emailMessage
 }
 
@@ -46,13 +47,14 @@ if(-not $event){
 }
 
 $eventFunc=$event.eventFunction
-$evntparms=@(ForEach($_ in $event.eventParams){"$($_.key)=$($_.value)"}) -join "~"
+$evntparms=@(ForEach($_ in $event.eventParams){"$($_.key)=$($ExecutionContext.InvokeCommand.ExpandString($_.value))"}) -join "~"
 
 if($evntparms){
     $evntparms ="proj=$proj~"+$evntparms
 }else{
     $evntparms ="proj=$proj"
 }
+
 <#
 $events = $listener.events| where { $_.eventTrigger -eq $eventname }
 ForEach ($event in $events){

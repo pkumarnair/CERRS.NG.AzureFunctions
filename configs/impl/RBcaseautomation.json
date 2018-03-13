@@ -1,9 +1,8 @@
 {
-	"applicationName":"caseautomation",
+	"applicationName":"RBcaseautomation",
 	"emailinfo":{
-		"emailto":["pradeep.kumar@cognosante.com","mark.babcock@cognosante.com"],
-		"emailfrom":"caseautomationsupport@cognosante.com",
-		"contactno":"123-456-7890"
+		"emailto":["pradeep.kumar@cognosante.com"],
+		"emailfrom":"caseautomationsupport@cognosante.com"
 	},
 	"events":[
 		{
@@ -21,11 +20,10 @@
  				{"key":"clusterName","value":"$env:clustername"},
 				{"key":"outMessage","value":"ClusterCreated"},
 				{"key":"pswrd","value":"$env:clusterpassword"},
-				{"key":"ScriptActionURI","value":"https://$env:storageAccountName.blob.$endpoint/$env:clustercontainer/ca-scriptaction"},
+				{"key":"ScriptActionURI","value":"https://cerrsimplhdispark.blob.core.usgovcloudapi.net/cerrscaseautomation/ca-scriptaction"},
 				{"key":"queueName","value":"$env:listenerqueueName"},
-				{"key":"VirtualNetworkId","value":"/subscriptions/$env:subscriptionid/resourceGroups/$env:spnresourcegroupname/providers/Microsoft.Network/virtualNetworks/$env:clusterVirtualNet"},
-				{"key":"SubnetName","value":"/subscriptions/$env:subscriptionid/resourceGroups/$env:spnresourcegroupname/providers/Microsoft.Network/virtualNetworks/$env:clusterVirtualNet/subnets/$env:clusterSubNet"},
-				{"key":"endpoint","value":"$env:endpoint"}
+				{"key":"VirtualNetworkId","value":"$env:VirtualNetworkId"},
+				{"key":"SubnetName","value":"$env:SubnetName"}
 			]
 		},
 		{
@@ -44,10 +42,85 @@
 			]
 		},
 		{
+			"eventTrigger":"StartFFMParquetConversion",
+			"eventDescription":"Convert FFM File to Parquet",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"mainfile","value":"ca-python/src/FFMConvertToParquet.py"},
+				{"key":"outMessage","value":"ConversionCompleted"},
+				{"key":"pyargs","value":"$env:storageAccountName"},
+				{"key":"pyargs","value":"$env:storageaccountkey"},
+				{"key":"pyargs","value":"$env:endpoint"},
+				{"key":"pyargs","value":"$env:listenerqueueName"},
+				{"key":"pyargs","value":"$env:clustercontainer"},
+				{"key":"pyargs","value":"ca-inputs/ffm/"},
+				{"key":"pyargs","value":"ca-parquet/ffm/"},
+				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"Start1095AParquetConversion",
+			"eventDescription":"Convert 1095A File to Parquet",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"mainfile","value":"ca-python/src/1095AConvertToParquet.py"},
+				{"key":"outMessage","value":"ConversionCompleted"},
+				{"key":"pyargs","value":"$env:storageAccountName"},
+				{"key":"pyargs","value":"$env:storageaccountkey"},
+				{"key":"pyargs","value":"$env:endpoint"},
+				{"key":"pyargs","value":"$env:listenerqueueName"},
+				{"key":"pyargs","value":"$env:clustercontainer"},
+				{"key":"pyargs","value":"ca-inputs/1095a/"},
+				{"key":"pyargs","value":"ca-parquet/1095a/"},
+				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"StartRCNOParquetConversion",
+			"eventDescription":"Convert RCNO File to Parquet",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"mainfile","value":"ca-python/src/RCNOConvertToParquet.py"},
+				{"key":"outMessage","value":"ConversionCompleted"},
+				{"key":"pyargs","value":"$env:storageAccountName"},
+				{"key":"pyargs","value":"$env:storageaccountkey"},
+				{"key":"pyargs","value":"$env:endpoint"},
+				{"key":"pyargs","value":"$env:listenerqueueName"},
+				{"key":"pyargs","value":"$env:clustercontainer"},
+				{"key":"pyargs","value":"ca-inputs/rcno/"},
+				{"key":"pyargs","value":"ca-parquet/rcno/"},
+				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
 			"eventTrigger":"StartCaseClassification",
 			"eventDescription":"Case Classification",
-			"eventFunction":"Initiate-Livy",
-			"eventParams":[  
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
 				{"key":"clusteruser","value":"$env:clusteruser"},
 				{"key":"SecurePassword","value":"$env:clusterpassword"},
 				{"key":"clustername","value":"$env:clustername"},
@@ -68,81 +141,6 @@
 			]
 		},
 		{
-			"eventTrigger":"STStartCaseClassification",
-			"eventDescription":"Case Classification",
-			"eventFunction":"Initiate-Livy",
-			"eventParams":[
-				{"key":"mainfile","value":"ca-python/src/CaseClassification.py"},
-				{"key":"outMessage","value":"ConversionCompleted"},
-				{"key":"pyargs","value":"$env:storageAccountName"},
-				{"key":"pyargs","value":"$env:storageaccountkey"},
-				{"key":"pyargs","value":"$env:endpoint"},
-				{"key":"pyargs","value":"$env:clustercontainer"},
-				{"key":"pyargs","value":"$env:listenerqueueName"},
-				{"key":"pyargs","value":"ca-python/pickle/"},
-				{"key":"pyargs","value":"hics_model.sav2"},
-				{"key":"pyargs","value":"ca-inputs/hics/"},
-				{"key":"pyargs","value":"ca-outputs/classification/"},
-				{"key":"pyargs","value":"ClassifiedCases.csv"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},	
-				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
-			]
-		},
-		{
-			"eventTrigger":"StartFFMParquetConversion",
-			"eventDescription":"Convert FFM File to Parquet",
-			"eventFunction":"Initiate-Livy",
-			"eventParams":[
-				{"key":"mainfile","value":"ca-python/src/FFMConvertToParquet.py"},
-				{"key":"outMessage","value":"ConversionCompleted"},
-				{"key":"pyargs","value":"$env:storageAccountName"},
-				{"key":"pyargs","value":"$env:storageaccountkey"},
-				{"key":"pyargs","value":"$env:endpoint"},
-				{"key":"pyargs","value":"$env:listenerqueueName"},
-				{"key":"pyargs","value":"$env:clustercontainer"},
-				{"key":"pyargs","value":"ca-inputs/ffm/"},
-				{"key":"pyargs","value":"ca-parquet/ffm/"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
-				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
-			]
-		},
-		{
-			"eventTrigger":"Start1095AParquetConversion",
-			"eventDescription":"Convert 1095A File to Parquet",
-			"eventFunction":"Initiate-Livy",
-			"eventParams":[
-				{"key":"mainfile","value":"ca-python/src/1095AConvertToParquet.py"},
-				{"key":"outMessage","value":"ConversionCompleted"},
-				{"key":"pyargs","value":"$env:storageAccountName"},
-				{"key":"pyargs","value":"$env:storageaccountkey"},
-				{"key":"pyargs","value":"$env:endpoint"},
-				{"key":"pyargs","value":"$env:listenerqueueName"},
-				{"key":"pyargs","value":"$env:clustercontainer"},
-				{"key":"pyargs","value":"ca-inputs/1095a/"},
-				{"key":"pyargs","value":"ca-parquet/1095a/"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
-				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
-			]
-		},
-		{
-			"eventTrigger":"StartRCNOParquetConversion",
-			"eventDescription":"Convert RCNO File to Parquet",
-			"eventFunction":"Initiate-Livy",
-			"eventParams":[
-				{"key":"mainfile","value":"ca-python/src/RCNOConvertToParquet.py"},
-				{"key":"outMessage","value":"ConversionCompleted"},
-				{"key":"pyargs","value":"$env:storageAccountName"},
-				{"key":"pyargs","value":"$env:storageaccountkey"},
-				{"key":"pyargs","value":"$env:endpoint"},
-				{"key":"pyargs","value":"$env:listenerqueueName"},
-				{"key":"pyargs","value":"$env:clustercontainer"},
-				{"key":"pyargs","value":"ca-inputs/rcno/"},
-				{"key":"pyargs","value":"ca-parquet/rcno/"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
-				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
-			]
-		},
-		{
 			"eventTrigger":"ConversionCompleted",
 			"eventDescription":"Waits for jobs that run conncurrently to trigger the next job",
 			"eventFunction":"Wait-For-Concurrent-Jobs",
@@ -159,8 +157,14 @@
 		{
 			"eventTrigger":"StartDataExtraction",
 			"eventDescription":"Data Extraction from FFM, 1095A and RCNO",
-			"eventFunction":"Initiate-Livy",
+			"eventFunction":"Execute-Runbook",
 			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
 				{"key":"mainfile","value":"ca-python/src/CaseDataExtraction.py"},
 				{"key":"outMessage","value":"DataExtractionCompleted"},
 				{"key":"pyargs","value":"$env:storageAccountName"},
@@ -180,9 +184,15 @@
 		},
 		{
 			"eventTrigger":"DataExtractionCompleted",
-			"eventDescription":"Case Compare which CaseCompares data from HICS, RCNO, FFM and 1095A and outputs recoomendations",
-			"eventFunction":"Initiate-Livy",
+			"eventDescription":"Case Compare which compares data from HICS, RCNO, FFM and 1095A and outputs recoomendations",
+			"eventFunction":"Execute-Runbook",
 			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
 				{"key":"mainfile","value":"ca-python/src/CaseCompare.py"},
 				{"key":"outMessage","value":"CaseCompareCompleted"},
 				{"key":"pyargs","value":"$env:storageAccountName"},
@@ -204,28 +214,13 @@
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
 				{"key":"runbookName","value":"Delete-CaseAutomationCluster"},
-				{"key":"resourceGroupName","value":"CERRS-DEV-TEST-RG"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
 				{"key":"automationAccount","value":"$env:automationaccountname"},
  				{"key":"subscriptionId","value":"$env:subscriptionid"},
  				{"key":"clusterName","value":"$env:clustername"},
  				{"key":"storageAccountName","value":"$env:storageAccountName"},
- 				{"key":"environment","value":"$env:environment"},
 				{"key":"queueName","value":"$env:listenerqueueName"},
 				{"key":"outMessage","value":"ClusterDeleted"}
-			]
-		},
-		{
-			"eventTrigger":"ExecuteRestAPI",
-			"eventDescription":"Execute a Rest API",
-			"eventFunction":"Execute-RestRequest",
-			"eventParams":[
-				{"key":"resturl","value":"https:/mcr-cc.test.cognosante.cc/v1/AddressInfo"},
-				{"key":"restMethod","value":"Get"},
-				{"key":"restparams-street","value":"+509+Adams+Ave+Apt+1A+Cape+Canaveral+FL+32920"},
-				{"key":"header-callingApp","value":"TestFramework"},
-				{"key":"header-callingUser","value":"AutomationUser"},
-				{"key":"header-x-cognosante-authentication","value":"6d5d56f7cf494134a96cc6910549341a"},
-				{"key":"header-Authorization","value":"Basic eF9jb2dub3NhbnRlX2F1dGhlbnRpY2F0aW9uOjZkNWQ1NmY3Y2Y0OTQxMzRhOTZjYzY5MTA1NDkzNDFh"}
 			]
 		}
 	]

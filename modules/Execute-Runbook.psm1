@@ -13,54 +13,54 @@ function Execute-Runbook{
     $pyfiles=@()
     $pyconf=@{}
     $pyargs=@()
+    $runon=""
+    $joblocation=$env:pythonJobLocation
 
     write-output "Starting Execute-Runbook------------"
     write-output $params
 
     ForEach($_ in $params.split("~")){
-        $key,$val=$_.split("=")
-        if($val.split("-")[0] -eq "env"){
-            $v=$val.split("-")[1]
-            $value = (get-item env:$v).value
-        }else{
-            $value = $val
-        }
+        $key,$value=$_.split("=")
         if($key -eq "runbookName"){
-          $RunbookName=$value
+            $RunbookName=$value
         }ElseIf($key -eq "resourceGroupName"){
-          $ResourceGroupName=$value
+            $ResourceGroupName=$value
         }ElseIf($key -eq "automationAccount"){
-          $AutomationAccount=$value
+            $AutomationAccount=$value
         }ElseIf($key -eq "proj"){
-          $proj=$value
+            $proj=$value
         }ElseIf($key -eq "outMessage"){
-          $value=$proj+"-"+$value
+            $value=$proj+"-"+$value
         }elseif($key -eq "pyfiles"){
-          $pyfiles+=$joblocation+$value
+            $pyfiles+=$joblocation+$value
         }elseIf($key -eq "pyargs"){
-          $pyargs+=$value
+            $pyargs+=$value
         }elseIf($key -Match "pyconf-*"){
-          $key1,$val=$key.split("-")
-          $key1=$val -join "-"
-          $pyconf.add($key1,$value)
+            $key1,$val=$key.split("-")
+            $key1=$val -join "-"
+            $pyconf.add($key1,$value)
+        }elseIf($key -eq "runon"){
+            $runon=$value
         }else{
 
         }
 
         write-output "Key is $key, and value is $value"
-        If($key -ne "proj" -and $key -ne "pyfiles" -and $key -ne "pyargs" -and -not($key -Match "pyconf-*")){
-            $RbParams.add($key,$value)
+        If($key -ne "proj" -and $key -ne "runon" -and $key -ne "pyfiles" -and $key -ne "pyargs" -and -not($key -Match "pyconf-*")){
+              $RbParams.add($key,$value)
         }
     }
 
     If($pyfiles){
-            $RbParams.add("pyfiles",$pyfiles)
+              $RbParams.add("pyfiles",$pyfiles)
     }
+
     If($pyargs){
-            $RbParams.add("pyargs",$pyargs)
+              $RbParams.add("pyargs",$pyargs)
     }
+
     If($pyconf){
-            $RbParams.add("pyconf",$pyconf)
+              $RbParams.add("pyconf",$pyconf)
     }
 
     write-output "The Runbook job parameters ------------"
@@ -79,10 +79,16 @@ function Execute-Runbook{
 
     try {
         Add-AzureRmAccount -Credential $cred -Tenant $tenantid -ServicePrincipal -EnvironmentName AzureUSGovernment
-        if ($RbParams){
-            Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -Parameter $RbParams
+        if($runon){
+            if ($RbParams){
+                  Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -Parameter $RbParams -RunOn $runon
+            }else{
+                  Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -RunOn $runon
+            }  
+        }elseIf ($RbParams){
+              Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -Parameter $RbParams
         }else{
-            Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName
+              Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName
         }
     }catch{
         $_
