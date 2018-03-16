@@ -17,8 +17,10 @@ function Wait-For-Concurrent-Jobs{
     $proj=""
     $files=""
 
-    ForEach($_ in $params.split("~")){
-        $key,$value=$_.split("=")
+    $sep1=[string[]]@("~~")
+    $sep2=[string[]]@("~=")
+    ForEach($_ in $params.split($sep1, [System.StringSplitOptions]::RemoveEmptyEntries)){
+        $key,$value=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
 
         if($key -eq "blobname"){
           $blobname=$value

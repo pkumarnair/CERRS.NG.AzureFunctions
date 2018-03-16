@@ -38,7 +38,7 @@ if ($listener.emailinfo){
     $emailMessage=$emailinfo|ConvertTo-JSON
     $environment=$env:environment
     WriteMessageToQueue $storageaccountname $storagekey $environment $queuename $emailMessage
-    Write-Output "Wrote email" $emailMessage
+    #Write-Output "Wrote email" $emailMessage
 }
 
 if(-not $event){
@@ -47,12 +47,12 @@ if(-not $event){
 }
 
 $eventFunc=$event.eventFunction
-$evntparms=@(ForEach($_ in $event.eventParams){"$($_.key)=$($ExecutionContext.InvokeCommand.ExpandString($_.value))"}) -join "~"
+$evntparms=@(ForEach($_ in $event.eventParams){"$($_.key)~=$($ExecutionContext.InvokeCommand.ExpandString($_.value))"}) -join "~~"
 
 if($evntparms){
-    $evntparms ="proj=$proj~"+$evntparms
+    $evntparms ="proj~=$proj~~"+$evntparms
 }else{
-    $evntparms ="proj=$proj"
+    $evntparms ="proj~=$proj"
 }
 
 <#

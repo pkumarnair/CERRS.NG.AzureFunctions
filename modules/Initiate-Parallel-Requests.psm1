@@ -14,8 +14,10 @@ function Initiate-Parallel-Requests{
     $environment=$env:environment
     write-output "Inside Initiate-Parallel-Requests------------"
 
-    ForEach($_ in $params.split("~")){
-        $key,$value=$_.split("=")
+    $sep1=[string[]]@("~~")
+    $sep2=[string[]]@("~=")
+    ForEach($_ in $params.split($sep1, [System.StringSplitOptions]::RemoveEmptyEntries)){
+        $key,$value=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
         if($key -eq "queuename"){
           $queuename=$value
         }elseIf($key -eq "storagekey"){
@@ -42,7 +44,7 @@ function Initiate-Parallel-Requests{
     ForEach($message in $messages){
         try {
             $message=$proj+"-"+$message
-            WriteMessageToQueue $storageaccountname $storagekey $environment $queuename $message
+            WriteMessageToQueue $storageaccountname ($storagekey|out-string) $environment $queuename $message
         }catch{ 
             $_
             return
@@ -50,6 +52,7 @@ function Initiate-Parallel-Requests{
     }
     return
 }
+ 
 function WriteMessageToQueue( $storageaccnt,$storageaccountkey,$environment, $queuename, $Message){   
     try { 
             $ctx = New-AzureStorageContext -StorageAccountName $storageaccnt -StorageAccountKey $storageaccountkey -Environment $environment
@@ -60,5 +63,4 @@ function WriteMessageToQueue( $storageaccnt,$storageaccountkey,$environment, $qu
     catch { 
         $_
     }
-} 
- 
+}

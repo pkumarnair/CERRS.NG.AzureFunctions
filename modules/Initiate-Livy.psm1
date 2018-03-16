@@ -18,8 +18,10 @@ function Initiate-Livy{
     #$joblocation="wasb://cerrscablob@cerrscaseautomationdev.blob.core.usgovcloudapi.net/"
     write-output "Inside Initiating Livy------------"
 
-    ForEach($_ in $params.split("~")){
-        $key,$value=$_.split("=")
+    $sep1=[string[]]@("~~")
+    $sep2=[string[]]@("~=")
+    ForEach($_ in $params.split($sep1, [System.StringSplitOptions]::RemoveEmptyEntries)){
+        $key,$value=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
         if($key -eq "pyfiles"){
           $pyfiles+=$joblocation+$value
         }elseIf($key -eq "pyargs"){

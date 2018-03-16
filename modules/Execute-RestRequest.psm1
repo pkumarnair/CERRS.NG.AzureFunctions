@@ -14,8 +14,10 @@ function Execute-RestRequest{
 
     write-output "Inside Execute RestRequest------------"
 
-    ForEach($_ in $params.split("~")){
-        $key,$value=$_.split("=")
+    $sep1=[string[]]@("~~")
+    $sep2=[string[]]@("~=")
+    ForEach($_ in $params.split($sep1, [System.StringSplitOptions]::RemoveEmptyEntries)){
+        $key,$value=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
         if($key -eq "resturl"){
           $restUrl=$value
         }elseIf($key -eq "restMethod"){

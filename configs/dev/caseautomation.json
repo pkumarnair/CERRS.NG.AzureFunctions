@@ -1,9 +1,8 @@
 {
 	"applicationName":"caseautomation",
 	"emailinfo":{
-		"emailto":["pradeep.kumar@cognosante.com","mark.babcock@cognosante.com"],
-		"emailfrom":"caseautomationsupport@cognosante.com",
-		"contactno":"123-456-7890"
+		"emailto":["Pradeep.Kumar@cognosante.com"],
+		"emailfrom":"caseautomationsupport@cognosante.com"
 	},
 	"events":[
 		{
@@ -21,11 +20,12 @@
  				{"key":"clusterName","value":"$env:clustername"},
 				{"key":"outMessage","value":"ClusterCreated"},
 				{"key":"pswrd","value":"$env:clusterpassword"},
-				{"key":"ScriptActionURI","value":"https://$env:storageAccountName.blob.$endpoint/$env:clustercontainer/ca-scriptaction"},
+				{"key":"ScriptActionURI","value":"https://$env:storageAccountName.blob.$env:endpoint/$env:clustercontainer/ca-scriptaction"},
 				{"key":"queueName","value":"$env:listenerqueueName"},
-				{"key":"VirtualNetworkId","value":"/subscriptions/$env:subscriptionid/resourceGroups/$env:spnresourcegroupname/providers/Microsoft.Network/virtualNetworks/$env:clusterVirtualNet"},
-				{"key":"SubnetName","value":"/subscriptions/$env:subscriptionid/resourceGroups/$env:spnresourcegroupname/providers/Microsoft.Network/virtualNetworks/$env:clusterVirtualNet/subnets/$env:clusterSubNet"},
-				{"key":"endpoint","value":"$env:endpoint"}
+				{"key":"VirtualNetworkId","value":"/subscriptions/9f657357-308f-4780-aee7-070aa7f55580/resourceGroups/CERRS-DEV-TEST-RG/providers/Microsoft.Network/virtualNetworks/CERRS-DEV-TEST"},
+				{"key":"SubnetName","value":"/subscriptions/9f657357-308f-4780-aee7-070aa7f55580/resourceGroups/CERRS-DEV-TEST-RG/providers/Microsoft.Network/virtualNetworks/CERRS-DEV-TEST/subnets/CERRS-TST-DMZ-NET"},
+				{"key":"endpoint","value":"$env:endpoint"},
+				{"key":"environment","value":"AzureUSGovernment"}
 			]
 		},
 		{
@@ -44,56 +44,20 @@
 			]
 		},
 		{
-			"eventTrigger":"StartCaseClassification",
-			"eventDescription":"Case Classification",
-			"eventFunction":"Initiate-Livy",
-			"eventParams":[  
+			"eventTrigger":"StartFFMParquetConversion",
+			"eventDescription":"Convert FFM File to Parquet",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
 				{"key":"clusteruser","value":"$env:clusteruser"},
 				{"key":"SecurePassword","value":"$env:clusterpassword"},
 				{"key":"clustername","value":"$env:clustername"},
-				{"key":"mainfile","value":"ca-python/src/CaseClassification.py"},
-				{"key":"outMessage","value":"ConversionCompleted"},
-				{"key":"pyargs","value":"$env:storageAccountName"},
-				{"key":"pyargs","value":"$env:storageaccountkey"},
-				{"key":"pyargs","value":"$env:endpoint"},
-				{"key":"pyargs","value":"$env:clustercontainer"},
-				{"key":"pyargs","value":"$env:listenerqueueName"},
-				{"key":"pyargs","value":"ca-python/pickle/"},
-				{"key":"pyargs","value":"hics_model.sav2"},
-				{"key":"pyargs","value":"ca-inputs/hics/"},
-				{"key":"pyargs","value":"ca-outputs/classification/"},
-				{"key":"pyargs","value":"ClassifiedCases.csv"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},	
-				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
-			]
-		},
-		{
-			"eventTrigger":"STStartCaseClassification",
-			"eventDescription":"Case Classification",
-			"eventFunction":"Initiate-Livy",
-			"eventParams":[
-				{"key":"mainfile","value":"ca-python/src/CaseClassification.py"},
-				{"key":"outMessage","value":"ConversionCompleted"},
-				{"key":"pyargs","value":"$env:storageAccountName"},
-				{"key":"pyargs","value":"$env:storageaccountkey"},
-				{"key":"pyargs","value":"$env:endpoint"},
-				{"key":"pyargs","value":"$env:clustercontainer"},
-				{"key":"pyargs","value":"$env:listenerqueueName"},
-				{"key":"pyargs","value":"ca-python/pickle/"},
-				{"key":"pyargs","value":"hics_model.sav2"},
-				{"key":"pyargs","value":"ca-inputs/hics/"},
-				{"key":"pyargs","value":"ca-outputs/classification/"},
-				{"key":"pyargs","value":"ClassifiedCases.csv"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},	
-				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
-			]
-		},
-		{
-			"eventTrigger":"StartFFMParquetConversion",
-			"eventDescription":"Convert FFM File to Parquet",
-			"eventFunction":"Initiate-Livy",
-			"eventParams":[
-				{"key":"mainfile","value":"ca-python/src/FFMConvertToParquet.py"},
+				{"key":"hybridAutoServer","value":"$env:hybridAutoServer"},
+				{"key":"hybridDomainUser","value":"$env:hybridDomainUser"},
+				{"key":"livyurl","value":"https://$env:clustername.azurehdinsight.us/livy/batches"},
+				{"key":"mainfile","value":"$env:pythonJobLocation/ca-python/src/FFMConvertToParquet.py"},
 				{"key":"outMessage","value":"ConversionCompleted"},
 				{"key":"pyargs","value":"$env:storageAccountName"},
 				{"key":"pyargs","value":"$env:storageaccountkey"},
@@ -102,16 +66,25 @@
 				{"key":"pyargs","value":"$env:clustercontainer"},
 				{"key":"pyargs","value":"ca-inputs/ffm/"},
 				{"key":"pyargs","value":"ca-parquet/ffm/"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
+				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
 			]
 		},
 		{
 			"eventTrigger":"Start1095AParquetConversion",
 			"eventDescription":"Convert 1095A File to Parquet",
-			"eventFunction":"Initiate-Livy",
+			"eventFunction":"Execute-Runbook",
 			"eventParams":[
-				{"key":"mainfile","value":"ca-python/src/1095AConvertToParquet.py"},
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"hybridAutoServer","value":"$env:hybridAutoServer"},
+				{"key":"hybridDomainUser","value":"$env:hybridDomainUser"},
+				{"key":"livyurl","value":"https://$env:clustername.azurehdinsight.us/livy/batches"},
+				{"key":"mainfile","value":"$env:pythonJobLocation/ca-python/src/1095AConvertToParquet.py"},
 				{"key":"outMessage","value":"ConversionCompleted"},
 				{"key":"pyargs","value":"$env:storageAccountName"},
 				{"key":"pyargs","value":"$env:storageaccountkey"},
@@ -120,16 +93,25 @@
 				{"key":"pyargs","value":"$env:clustercontainer"},
 				{"key":"pyargs","value":"ca-inputs/1095a/"},
 				{"key":"pyargs","value":"ca-parquet/1095a/"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
+				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
 			]
 		},
 		{
 			"eventTrigger":"StartRCNOParquetConversion",
 			"eventDescription":"Convert RCNO File to Parquet",
-			"eventFunction":"Initiate-Livy",
+			"eventFunction":"Execute-Runbook",
 			"eventParams":[
-				{"key":"mainfile","value":"ca-python/src/RCNOConvertToParquet.py"},
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"hybridAutoServer","value":"$env:hybridAutoServer"},
+				{"key":"hybridDomainUser","value":"$env:hybridDomainUser"},
+				{"key":"livyurl","value":"https://$env:clustername.azurehdinsight.us/livy/batches"},
+				{"key":"mainfile","value":"$env:pythonJobLocation/ca-python/src/RCNOConvertToParquet.py"},
 				{"key":"outMessage","value":"ConversionCompleted"},
 				{"key":"pyargs","value":"$env:storageAccountName"},
 				{"key":"pyargs","value":"$env:storageaccountkey"},
@@ -138,8 +120,127 @@
 				{"key":"pyargs","value":"$env:clustercontainer"},
 				{"key":"pyargs","value":"ca-inputs/rcno/"},
 				{"key":"pyargs","value":"ca-parquet/rcno/"},
-				{"key":"pyfiles","value":"ca-python/src/cafunctions.py"},
+				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"StartCaseClassification",
+			"eventDescription":"Case Classification",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"hybridAutoServer","value":"$env:hybridAutoServer"},
+				{"key":"hybridDomainUser","value":"$env:hybridDomainUser"},
+				{"key":"livyurl","value":"https://$env:clustername.azurehdinsight.us/livy/batches"},
+				{"key":"mainfile","value":"$env:pythonJobLocation/ca-python/src/CaseClassification.py"},
+				{"key":"outMessage","value":"ConversionCompleted"},
+				{"key":"pyargs","value":"$env:storageAccountName"},
+				{"key":"pyargs","value":"$env:storageaccountkey"},
+				{"key":"pyargs","value":"$env:endpoint"},
+				{"key":"pyargs","value":"$env:clustercontainer"},
+				{"key":"pyargs","value":"$env:listenerqueueName"},
+				{"key":"pyargs","value":"ca-python/pickle/"},
+				{"key":"pyargs","value":"hics_model.sav2"},
+				{"key":"pyargs","value":"ca-inputs/hics/"},
+				{"key":"pyargs","value":"ca-outputs/classification/"},
+				{"key":"pyargs","value":"ClassifiedCases.csv"},
+				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},	
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"ConversionCompleted",
+			"eventDescription":"Waits for jobs that run conncurrently to trigger the next job",
+			"eventFunction":"Wait-For-Concurrent-Jobs",
+			"eventParams":[
+				{"key":"blobname","value":"jobwait/waitfordataextraction"},
+				{"key":"currentmessage","value":"ConversionCompleted"},
+				{"key":"outmessage","value":"StartDataExtraction"},
+				{"key":"waitmessage","value":"FFMParquetConversionComplete"},
+				{"key":"waitmessage","value":"RCNOParquetConversionComplete"},
+				{"key":"waitmessage","value":"1095AParquetConversionComplete"},
+				{"key":"waitmessage","value":"CaseClassificationComplete"}
+			]
+		},
+		{
+			"eventTrigger":"StartDataExtraction",
+			"eventDescription":"Data Extraction from FFM, 1095A and RCNO",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"hybridAutoServer","value":"$env:hybridAutoServer"},
+				{"key":"hybridDomainUser","value":"$env:hybridDomainUser"},
+				{"key":"livyurl","value":"https://$env:clustername.azurehdinsight.us/livy/batches"},
+				{"key":"mainfile","value":"$env:pythonJobLocation/ca-python/src/CaseDataExtraction.py"},
+				{"key":"outMessage","value":"DataExtractionCompleted"},
+				{"key":"pyargs","value":"$env:storageAccountName"},
+				{"key":"pyargs","value":"$env:storageaccountkey"},
+				{"key":"pyargs","value":"$env:endpoint"},
+				{"key":"pyargs","value":"$env:clustercontainer"},
+				{"key":"pyargs","value":"$env:listenerqueueName"},
+				{"key":"pyargs","value":"ca-outputs/classification/ClassifiedCases.csv"},
+				{"key":"pyargs","value":"ca-parquet/rcno/"},
+				{"key":"pyargs","value":"ca-parquet/ffm/"},
+				{"key":"pyargs","value":"ca-parquet/1095a/"},
+				{"key":"pyargs","value":"ca-outputs/extraction/"},
+				{"key":"pyargs","value":"CaseDataExtract.csv"},
+				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"DataExtractionCompleted",
+			"eventDescription":"Case Compare which compares data from HICS, RCNO, FFM and 1095A and outputs recoomendations",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"hybridAutoServer","value":"$env:hybridAutoServer"},
+				{"key":"hybridDomainUser","value":"$env:hybridDomainUser"},
+				{"key":"livyurl","value":"https://$env:clustername.azurehdinsight.us/livy/batches"},
+				{"key":"mainfile","value":"$env:pythonJobLocation/ca-python/src/CaseCompare.py"},
+				{"key":"outMessage","value":"CaseCompareCompleted"},
+				{"key":"pyargs","value":"$env:storageAccountName"},
+				{"key":"pyargs","value":"$env:storageaccountkey"},
+				{"key":"pyargs","value":"$env:endpoint"},
+				{"key":"pyargs","value":"$env:clustercontainer"},
+				{"key":"pyargs","value":"$env:listenerqueueName"},
+				{"key":"pyargs","value":"ca-outputs/extraction/CaseDataExtract.csv"},
+				{"key":"pyargs","value":"ca-outputs/compare/"},
+				{"key":"pyargs","value":"Caseoutput.csv"},
+				{"key":"pyargs","value":"cerrscafile"},
+				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"CaseCompareCompleted",
+			"eventDescription":"Delete a cluster",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Delete-CaseAutomationCluster"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+ 				{"key":"subscriptionId","value":"$env:subscriptionid"},
+ 				{"key":"clusterName","value":"$env:clustername"},
+ 				{"key":"storageAccountName","value":"$env:storageAccountName"},
+				{"key":"queueName","value":"$env:listenerqueueName"},
+				{"key":"outMessage","value":"ClusterDeleted"}
 			]
 		}
 	]
