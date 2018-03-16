@@ -13,7 +13,7 @@ function Execute-Runbook{
     $pyfiles=@()
     $pyconf=@{}
     $pyargs=@()
-    $runon=""
+    $hybridAutoServer=""
     $joblocation=$env:pythonJobLocation
 
     write-output "Starting Execute-Runbook------------"
@@ -39,14 +39,14 @@ function Execute-Runbook{
             $key1,$val=$key.split("-")
             $key1=$val -join "-"
             $pyconf.add($key1,$value)
-        }elseIf($key -eq "runon"){
-            $runon=$value
+        }elseIf($key -eq "hybridAutoServer"){
+            $hybridAutoServer=$value
         }else{
 
         }
 
         write-output "Key is $key, and value is $value"
-        If($key -ne "proj" -and $key -ne "runon" -and $key -ne "pyfiles" -and $key -ne "pyargs" -and -not($key -Match "pyconf-*")){
+        If($key -ne "proj" -and $key -ne "hybridAutoServer" -and $key -ne "pyfiles" -and $key -ne "pyargs" -and -not($key -Match "pyconf-*")){
               $RbParams.add($key,$value)
         }
     }
@@ -79,11 +79,11 @@ function Execute-Runbook{
 
     try {
         Add-AzureRmAccount -Credential $cred -Tenant $tenantid -ServicePrincipal -EnvironmentName AzureUSGovernment
-        if($runon){
+        if($hybridAutoServer){
             if ($RbParams){
-                  Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -Parameter $RbParams -RunOn $runon
+                  Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -Parameter $RbParams -RunOn $hybridAutoServer
             }else{
-                  Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -RunOn $runon
+                  Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -RunOn $hybridAutoServer
             }  
         }elseIf ($RbParams){
               Start-AzureRMAutomationRunbook -AutomationAccountName $AutomationAccount -Name $RunbookName -ResourceGroupName $ResourceGroupName -Parameter $RbParams
