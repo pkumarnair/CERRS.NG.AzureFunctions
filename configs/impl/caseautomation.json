@@ -1,10 +1,10 @@
 {
 	"applicationName":"caseautomation",
 	"emailinfo":{
-		"emailto":["Pradeep.Kumar@cognosante.com"],
+		"emailto":["CEDARCADevTeam@cognosante.com"],
 		"emailfrom":"caseautomationsupport@cognosante.com"
 	},
-	"events":[
+	"events":[	
 		{
 			"eventTrigger":"StartCaseAutomation",
 			"eventDescription":"Create a cluster",
@@ -229,7 +229,7 @@
 			]
 		},
 		{
-			"eventTrigger":"CaseCompareCompleted",
+			"eventTrigger":"DeleteCluster",
 			"eventDescription":"Delete a cluster",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
@@ -240,6 +240,7 @@
  				{"key":"clusterName","value":"$env:clustername"},
  				{"key":"storageAccountName","value":"$env:storageAccountName"},
 				{"key":"queueName","value":"$env:listenerqueueName"},
+				{"key":"environment","value":"$env:environment"},
 				{"key":"outMessage","value":"ClusterDeleted"}
 			]
 		}
