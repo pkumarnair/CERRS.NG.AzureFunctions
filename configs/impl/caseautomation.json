@@ -37,7 +37,10 @@
 				{"key":"connectionstring","value":"$env:AzureWebJobsStorage"},
 				{"key":"storagekey","value":"$env:storageaccountkey"},
 				{"key":"storageaccountname","value":"$env:storageAccountName"},
-				{"key":"message","value":"StartRCNOParquetConversion"}
+				{"key":"message","value":"StartFFMParquetConversion"},
+				{"key":"message","value":"StartRCNOParquetConversion"},
+				{"key":"message","value":"Start1095AParquetConversion"},
+				{"key":"message","value":"StartCaseClassification"}
 			]
 		},
 		{
@@ -152,7 +155,7 @@
 			]
 		},
 		{
-			"eventTrigger":"STConversionCompleted",
+			"eventTrigger":"ConversionCompleted",
 			"eventDescription":"Waits for jobs that run conncurrently to trigger the next job",
 			"eventFunction":"Wait-For-Concurrent-Jobs",
 			"eventParams":[
