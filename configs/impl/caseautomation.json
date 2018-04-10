@@ -6,6 +6,29 @@
 	},
 	"events":[	
 		{
+			"eventTrigger":"CreateHDInsightCluster",
+			"eventDescription":"Create a cluster",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Create-CaseAutomationCluster"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+ 				{"key":"location","value":"$env:location"},
+ 				{"key":"subscriptionId","value":"$env:subscriptionid"},
+ 				{"key":"storageAccountName","value":"$env:storageAccountName"},
+ 				{"key":"containerName","value":"$env:clustercontainer"},
+ 				{"key":"clusterName","value":"$env:clustername"},
+				{"key":"outMessage","value":"HDInsightClusterCreated"},
+				{"key":"pswrd","value":"$env:clusterpassword"},
+				{"key":"ScriptActionURI","value":"https://$env:storageAccountName.blob.$env:endpoint/$env:clustercontainer/ca-scriptaction"},
+				{"key":"queueName","value":"$env:listenerqueueName"},
+				{"key":"VirtualNetworkId","value":"$env:VirtualNetworkId"},
+				{"key":"SubnetName","value":"$env:SubnetName"},
+				{"key":"endpoint","value":"$env:endpoint"},
+				{"key":"environment","value":"$env:environment"}
+			]
+		},
+		{
 			"eventTrigger":"StartCaseAutomation",
 			"eventDescription":"Create a cluster",
 			"eventFunction":"Execute-Runbook",
@@ -201,6 +224,39 @@
 		},
 		{
 			"eventTrigger":"DataExtractionCompleted",
+			"eventDescription":"Smarty Street Validation",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Initiate-Livy"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+				{"key":"clusteruser","value":"$env:clusteruser"},
+				{"key":"SecurePassword","value":"$env:clusterpassword"},
+				{"key":"clustername","value":"$env:clustername"},
+				{"key":"hybridAutoServer","value":"$env:hybridAutoServer","pass":"false"},
+				{"key":"hybridDomainUser","value":"$env:hybridDomainUser"},
+				{"key":"livyurl","value":"$env:livyurl"},
+				{"key":"mainfile","value":"$env:pythonJobLocation/ca-python/src/CASmartyStreetValidation.py"},
+				{"key":"outMessage","value":"SmartyStreetVCompleted"},
+				{"key":"pyargs","value":"$env:storageAccountName"},
+				{"key":"pyargs","value":"$env:storageaccountkey"},
+				{"key":"pyargs","value":"$env:endpoint"},
+				{"key":"pyargs","value":"$env:clustercontainer"},
+				{"key":"pyargs","value":"$env:listenerqueueName"},
+				{"key":"pyargs","value":"ca-outputs/extraction/CaseDataExtract.csv"},
+				{"key":"pyargs","value":"https://mcr-cc.test.cognosante.cc/v1/AddressInfo?"},
+				{"key":"pyargs","value":"TestFramework"},
+				{"key":"pyargs","value":"AutomationUser"},
+				{"key":"pyargs","value":"$env:smartystreet_authentication"},
+				{"key":"pyargs","value":"$env:smartystreet_authorization"},
+				{"key":"pyargs","value":"ca-outputs/smartystreetvalidation/"},
+				{"key":"pyargs","value":"CASmartyStreetResults.csv"},
+				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},
+				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},		
+		{
+			"eventTrigger":"SmartyStreetVCompleted",
 			"eventDescription":"Case Compare which compares data from HICS, RCNO, FFM and 1095A and outputs recoomendations",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
@@ -226,6 +282,22 @@
 				{"key":"pyargs","value":"cerrscafile"},
 				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
+			]
+		},
+		{
+			"eventTrigger":"CaseCompareCompleted",
+			"eventDescription":"Delete a cluster",
+			"eventFunction":"Execute-Runbook",
+			"eventParams":[
+				{"key":"runbookName","value":"Delete-CaseAutomationCluster"},
+				{"key":"resourceGroupName","value":"$env:spnresourcegroupname"},
+				{"key":"automationAccount","value":"$env:automationaccountname"},
+ 				{"key":"subscriptionId","value":"$env:subscriptionid"},
+ 				{"key":"clusterName","value":"$env:clustername"},
+ 				{"key":"storageAccountName","value":"$env:storageAccountName"},
+				{"key":"queueName","value":"$env:listenerqueueName"},
+				{"key":"environment","value":"$env:environment"},
+				{"key":"outMessage","value":"ClusterDeleted"}
 			]
 		},
 		{
