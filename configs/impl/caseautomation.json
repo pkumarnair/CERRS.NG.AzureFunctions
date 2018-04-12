@@ -276,14 +276,14 @@
 				{"key":"pyargs","value":"$env:endpoint"},
 				{"key":"pyargs","value":"$env:clustercontainer"},
 				{"key":"pyargs","value":"$env:listenerqueueName"},
-				{"key":"pyargs","value":"ca-outputs/extraction/CaseDataExtract.csv"},
+				{"key":"pyargs","value":"ca-outputs/smartystreetvalidation/CASmartyStreetResults.csv"},
 				{"key":"pyargs","value":"ca-outputs/compare/"},
 				{"key":"pyargs","value":"Caseoutput.csv"},
 				{"key":"pyargs","value":"cerrscafile"},
 				{"key":"pyfiles","value":"$env:pythonJobLocation/ca-python/src/cafunctions.py"},
 				{"key":"pyconf-spark.yarn.appMasterEnv.PYSPARK_PYTHON","value":"python2"}
-			]
-		},
+			] 
+ 		},
 		{
 			"eventTrigger":"CaseCompareCompleted",
 			"eventDescription":"Delete a cluster",
