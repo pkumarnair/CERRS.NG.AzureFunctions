@@ -285,7 +285,7 @@
 			] 
  		},
 		{
-			"eventTrigger":"CaseCompareCompleted",
+			"eventTrigger":"StubCaseCompareCompleted",
 			"eventDescription":"Delete a cluster",
 			"eventFunction":"Execute-Runbook",
 			"eventParams":[
