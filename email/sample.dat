@@ -1,0 +1,14 @@
+{
+	"emailinfo":{
+		"emailto":[
+			"pradeep.kumar@cognosante.com",
+			"mark.babcock@cognosante.com"
+		],
+		"emailfrom":"caseautomationsupport@cognosante.com",
+		"contactno":"123-456-7890"
+	},
+	"content":{
+		"subject":"Starting Case Automation process",
+		"body":"Starting case automation process"
+	}
+}

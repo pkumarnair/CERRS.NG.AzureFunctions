@@ -20,18 +20,18 @@ function Wait-For-Concurrent-Jobs{
     $sep1=[string[]]@("~~")
     $sep2=[string[]]@("~=")
     ForEach($_ in $params.split($sep1, [System.StringSplitOptions]::RemoveEmptyEntries)){
-        $key,$value=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
+        $vartype,$varname,$varval,$varpass,$varkeyname=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
 
-        if($key -eq "blobname"){
-          $blobname=$value
-        }elseIf($key -eq "waitmessage"){
-            $messages+=$value
-        }elseIf($key -eq "currentmessage"){
-            $currentmessage=$value
-        }elseIf($key -eq "proj"){
-          $proj=$value
-        }elseIf($key -eq "outmessage"){
-          $outmessage=$value
+        if($varname -eq "blobname"){
+          $blobname=$varname
+        }elseIf($varname -eq "waitmessage"){
+            $messages+=$varname
+        }elseIf($varname -eq "currentmessage"){
+            $currentmessage=$varname
+        }elseIf($varname -eq "proj"){
+          $proj=$varname
+        }elseIf($varname -eq "outmessage"){
+          $outmessage=$varname
         }else{
 
         }

@@ -9,11 +9,9 @@ function Execute-Runbook{
     $AutomationAccount=""
     $RunbookName=""
     $ResourceGroupName=""
-    $RbParams=@{}
-    $pyfiles=@()
-    $pyconf=@{}
-    $pyargs=@()
     $hybridAutoServer=""
+    $proj=""
+    $RbParams=@{}
 
     write-output "Starting Execute-Runbook------------"
     #write-output $params
@@ -21,47 +19,44 @@ function Execute-Runbook{
     $sep1=[string[]]@("~~")
     $sep2=[string[]]@("~=")
     ForEach($_ in $params.split($sep1, [System.StringSplitOptions]::RemoveEmptyEntries)){
-        $key,$value=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
-        if($key -eq "runbookName"){
-            $RunbookName=$value
-        }ElseIf($key -eq "resourceGroupName"){
-            $ResourceGroupName=$value
-        }ElseIf($key -eq "automationAccount"){
-            $AutomationAccount=$value
-        }ElseIf($key -eq "proj"){
-            $proj=$value
-        }ElseIf($key -eq "outMessage"){
-            $value=$proj+"-"+$value
-        }elseif($key -eq "pyfiles"){
-            $pyfiles+=$value
-        }elseIf($key -eq "pyargs"){
-            $pyargs+=$value
-        }elseIf($key -Match "pyconf-*"){
-            $key1,$val=$key.split("-")
-            $key1=$val -join "-"
-            $pyconf.add($key1,$value)
-        }elseIf($key -eq "hybridAutoServer"){
-            $hybridAutoServer=$value
+        $vartype,$varname,$varval,$varpass,$varkeyname=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
+
+        if($varname -eq "ResourceGroupName"){
+            $ResourceGroupName=$varval;
+        }elseif($varname -eq "AutomationAccount"){
+            $AutomationAccount=$varval;
+        }elseif($varname -eq "RunbookName"){
+            $RunbookName=$varval;
+        }elseif($varname -eq "hybridAutoServer"){
+            $hybridAutoServer=$varval;
+        }elseif($varname -eq "proj"){
+            $proj=$varval;
+        }elseif($varname -eq "outmessage"){
+            $varval=$proj+"-"+$varval;
         }else{
 
         }
 
-        #write-output "Key is $key, and value is $value"
-        If($key -ne "proj" -and $key -ne "hybridAutoServer" -and $key -ne "pyfiles" -and $key -ne "pyargs" -and -not($key -Match "pyconf-*")){
-              $RbParams.add($key,$value)
+        if($varpass -eq "false"){
+            continue
         }
-    }
 
-    If($pyfiles){
-              $RbParams.add("pyfiles",$pyfiles)
-    }
+        if(!$RbParams[$varname]){
+            if($vartype -eq "list"){
+                $RbParams[$varname]=@();
+            }elseif($vartype  -eq "hashtable"){
+                $RbParams[$varname]=@{};
+            }else{
+            }
+        }
 
-    If($pyargs){
-              $RbParams.add("pyargs",$pyargs)
-    }
-
-    If($pyconf.count){
-        $RbParams.add("pyconf",$pyconf)
+        if($vartype -eq "list"){
+            $RbParams[$varname]+=$varval
+        }elseif($vartype -eq "hashtable"){
+            $RbParams[$varname].Add($varkeyname, $varval)
+        }else{
+            $RbParams[$varname]=$varval
+        }
     }
 
     write-output "The Runbook job parameters ------------"

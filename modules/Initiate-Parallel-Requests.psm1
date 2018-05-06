@@ -17,19 +17,20 @@ function Initiate-Parallel-Requests{
     $sep1=[string[]]@("~~")
     $sep2=[string[]]@("~=")
     ForEach($_ in $params.split($sep1, [System.StringSplitOptions]::RemoveEmptyEntries)){
-        $key,$value=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
-        if($key -eq "queuename"){
-          $queuename=$value
-        }elseIf($key -eq "storagekey"){
-          $storagekey=$value
-        }elseIf($key -eq "connectionstring"){
-          $connectionstring=$value
-        }elseIf($key -eq "storageaccountname"){
-            $storageaccountname=$value
-        }elseIf($key -eq "message"){
-            $messages+=$value
-        }elseIf($key -eq "proj"){
-          $proj=$value
+        $vartype,$varname,$varval,$varpass,$varkeyname=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
+
+        if($varname -eq "queuename"){
+          $queuename=$varval
+        }elseIf($varname -eq "storagekey"){
+          $storagekey=$varval
+        }elseIf($varname -eq "connectionstring"){
+          $connectionstring=$varval
+        }elseIf($varname -eq "storageaccountname"){
+            $storageaccountname=$varval
+        }elseIf($varname -eq "message"){
+            $messages+=$varval
+        }elseIf($varname -eq "proj"){
+          $proj=$varval
         }else{
 
         }

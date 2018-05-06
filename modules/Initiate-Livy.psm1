@@ -11,33 +11,31 @@ function Initiate-Livy{
     $pyconf=@{}
     $pyargs=@()
     $postdata=@{}
+    $livyendpoint=""
     $outmessage=""
 
-    $joblocation=$env:pythonJobLocation
-    $livyendpoint=$env:livyendpoint
-    #$joblocation="wasb://cerrscablob@cerrscaseautomationdev.blob.core.usgovcloudapi.net/"
     write-output "Inside Initiating Livy------------"
 
     $sep1=[string[]]@("~~")
     $sep2=[string[]]@("~=")
     ForEach($_ in $params.split($sep1, [System.StringSplitOptions]::RemoveEmptyEntries)){
-        $key,$value=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
-        if($key -eq "pyfiles"){
-          $pyfiles+=$joblocation+$value
-        }elseIf($key -eq "pyargs"){
-          $pyargs+=$value
-        }elseIf($key -eq "proj"){
-          $proj=$value
-        }elseIf($key -eq "outMessage"){
-          $outmessage=$proj+"-"+$value
-        }elseIf($key -eq "mainfile"){
-          $mainfile=$joblocation+$value
-        }elseIf($key -Match "pyconf-*"){
-          $key,$val=$key.split("-")
-          $key=$val -join "-"
-          $pyconf.add($key,$value)
-        }else{
+        $vartype,$varname,$varval,$varpass,$varkeyname=$_.split($sep2, [System.StringSplitOptions]::RemoveEmptyEntries)
 
+        if($varname -eq "pyfiles"){
+          $pyfiles+=$varval
+        }elseIf($varname -eq "pyargs"){
+          $pyargs+=$varval
+        }elseIf($varname -eq "proj"){
+          $proj=$varval
+        }elseIf($varname -eq "outMessage"){
+          $outmessage=$proj+"-"+$varval
+        }elseIf($varname -eq "mainfile"){
+          $mainfile=$varval
+        }elseIf($varname -eq "pyconf"){
+          $pyconf.add($varkeyname,$varval)
+        }elseIf($varname -eq "livyendpoint"){
+          $livyendpoint=$varval
+        }else{
         }
     }
 

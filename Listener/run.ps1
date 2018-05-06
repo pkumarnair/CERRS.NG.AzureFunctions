@@ -47,12 +47,12 @@ if(-not $event){
 }
 
 $eventFunc=$event.eventFunction
-$evntparms=@(ForEach($_ in $event.eventParams){"$($_.key)~=$($ExecutionContext.InvokeCommand.ExpandString($_.value))"}) -join "~~"
+$evntparms=@(ForEach($_ in $event.eventParams){"$($_.type)~=$($_.key)~=$($ExecutionContext.InvokeCommand.ExpandString($_.value))~=$($_.pass)~=$($_.keyname)"}) -join "~~"
 
 if($evntparms){
-    $evntparms ="proj~=$proj~~"+$evntparms
+    $evntparms ="string~=proj~=$proj~=false~~"+$evntparms
 }else{
-    $evntparms ="proj~=$proj"
+    $evntparms ="string~=proj~=$proj~=false"
 }
 
 <#
